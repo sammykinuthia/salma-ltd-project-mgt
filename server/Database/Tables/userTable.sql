@@ -12,6 +12,6 @@ CREATE TABLE users(
     is_deleted BIT DEFAULT 0,
     is_admin BIT DEFAULT 0,
     project_id VARCHAR(200),
-    FOREIGN KEY (project_id) REFERENCES projects(id)
+    FOREIGN KEY (project_id) REFERENCES project(id)
 
 )
