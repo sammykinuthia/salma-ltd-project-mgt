@@ -15,8 +15,7 @@ export const validateUser = async (req, res, next) => {
         
     } 
     catch (error) {
-        console.log(error);
-        return res.json(error)
+        return res.status(401).json(error)
     }
 
 

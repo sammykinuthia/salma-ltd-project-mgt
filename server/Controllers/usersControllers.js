@@ -3,17 +3,17 @@ import bcrypt from 'bcrypt'
 import mssql from 'mssql'
 import { sqlConfig } from "../Config/config.js"
 import jwt from "jsonwebtoken"
-import { json } from "express"
 import dotenv from 'dotenv'
 import {DB} from "../DatabaseHelpers/index.js"
-
 dotenv.config()
-export const createUser = async(req, res) =>{
-    const { full_name, username, email, password } = req.body;
-    const hashedPwd = await bcrypt.hash(password, 6)
-    const id = v4()
 
+export const createUser = async(req, res) =>{
+    
     try {
+
+        const { full_name, username, email, password } = req.body;
+        const hashedPwd = await bcrypt.hash(password, 6)
+        const id = v4()
         const resp = await DB.exec('uspCreateUser',{id,full_name,username,email,'password':hashedPwd,});
         return res.status(201).json({
             "status": "success",
@@ -41,12 +41,12 @@ export const createUser = async(req, res) =>{
 
 
 export const loginUser = async (req, res) => {
-    const { username, password } = req.body;
     try {
+        const { username, password } = req.body;
         const record = await (DB.exec('uspGetUserPwd',{username}))
 
         if (record.recordset.length == 0) {
-            
+        
             return res.status(404).json(
                 {
                     status: "error",
@@ -70,13 +70,22 @@ export const loginUser = async (req, res) => {
                     })
             }
             else {
+                if (record.recordset.length == 0) {
+                    return res.status(403).json({ "message": "user not found " })
 
-                return res.status(401).json(
-                    {
-                        status: "error",
-                        body: "invalid password"
+                }
+                else {
+                    const { password: hashedPwd, ...payload } = record.recordset[0]
+                    const comparePwd = await bcrypt.compare(password, hashedPwd)
+                    if (comparePwd) {
+                        const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "3600s" })
+                        return res.json({ "message": "Login success", "token": token })
                     }
-                )
+                    else {
+
+                        return res.status(403).json({ "message": "invalid password" })
+                    }
+                }
             }
 
         }
@@ -137,9 +146,16 @@ export const getUser = async (req, res) => {
     }
 }
 
-export const checkUser = async (req, res) => {
-    console.log(req);
-    res.status(200)
+const checkUser = async (req, res) => {
+    try {
+        return res.json(req.info)
+
+    }
+    catch (error) {
+        return res.json(error)
+    }
+
 }
 
 
+export {checkUser}

@@ -6,7 +6,7 @@ import { usersRouter } from "./Routers/usersRouters.js"
 const app = express()
 app.use(express.json())
 const PORT=3000
-app.use('/',express.static(path.join(path.dirname("../frontend"),'frontend')))
+// app.use('/',express.static(path.join(path.dirname("../frontend"),'frontend')))
 
 
 
