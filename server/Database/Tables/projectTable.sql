@@ -19,8 +19,7 @@ CREATE TABLE projectUser(
     user_id VARCHAR(200) NOT NULL,
     PRIMARY KEY(project_id,user_id),
     FOREIGN KEY (project_id) REFERENCES project(id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 GO
 

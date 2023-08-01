@@ -60,6 +60,7 @@ form {
 
 input[type="text"],
 input[type="password"],
+input[type="file"],
 input[type="email"] {
   width: 100%;
   border: none;

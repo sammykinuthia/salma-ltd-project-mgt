@@ -2,42 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/global.css" />
 </head>
 <body>
-    <div class="container">
-        <form id="form-register" action="" method="get">
-            <label>
-                <p>Full name</p>
-                <input id="full-name" type="text">
-            </label>
-            <label>
-                <p>Username</p>
-                <input id="username" type="text">
-            </label>
-            <label>
-                <p>Email</p>
-                <input id="email" type="email">
-            </label>
-            <label>
-                <p>Profile Image</p>
-                <input id="profile-img" type="file">
-            </label>
-            <label>
-                <p>Password</p>
-                <input id="passwd" type="password">
-            </label>
-            <label>
-                <p>Confirm Password</p>
-                <input type="password">
-            </label>
-            <button id="passwd-2" type="submit">Register</button>
-        </form>
-    </div>
+    
+    <div class="container signup">
+        <div class="login_left">
+            <h1 style="padding: 20px; margin-top:50px"> Welcome to Salma Limited</h1>
+            <h3> Your Business Partner</h3>
+            <img src="../static/images/login_signup.png" alt="main_image" />
 
+        </div>
+        <div class="form-register">
+            <h1>Create an Account</h1>
+            <form id="login_form">
+                <p class="error"></p>
+                <label for="full-name">Full Name</label> <br>
+                <input type="text" id="full-name" placeholder="John Doe" required><br>
+          
+                <label for="email">Email</label><br>
+                 <input type="email" id="email" placeholder="johndoe@gmail.com" required><br>
+        
+                 <label for="username">Username</label> <br>
+                 <input type="text" id="username" placeholder="John" required><br>
+           
+                 <label for="profile-img">profile</label> <br>
+                 <input type="file" id="profile-img" required><br>
+           
+
+                 <label for="passwd">Password</label><br>
+                  <input type="password" id="passwd" placeholder="********" required><br>
+          
+                <button type="submit">Sign Up</button>
+              </form>
+              <p >Already have an account? <a href="login.html" class="btn_signup">Log In</a> </p>
+              
+        </div>
+    </div>
     <script type="module" src="../js/auth/register.js"></script>
+
 </body>
 </html>

@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { getProjects } from "../Controllers/projectControllers.js";
+import { getProjects, createProject} from "../Controllers/projectControllers.js";
+import { validateUser } from "../Middleware/userValidation.js";
 
 
 export const projectRouter = Router()
 
-projectRouter.get('/',getProjects)
+projectRouter.get('/',validateUser,getProjects)
+projectRouter.post('/',validateUser,createProject)
