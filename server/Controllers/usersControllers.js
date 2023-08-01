@@ -5,77 +5,94 @@ import { sqlConfig } from "../Config/config.js"
 import jwt from "jsonwebtoken"
 import { json } from "express"
 import dotenv from 'dotenv'
-dotenv.config()
+import {DB} from "../DatabaseHelpers/index.js"
 
-export const createUser = async (req, res) => {
-    const { full_name, username, email, password } = req.body
+dotenv.config()
+export const createUser = async(req, res) =>{
+    const { full_name, username, email, password } = req.body;
     const hashedPwd = await bcrypt.hash(password, 6)
     const id = v4()
-    const pool = await mssql.connect(sqlConfig)
-    if (pool.connected) {
-        pool.request()
-            .input("id", id)
-            .input("full_name", full_name)
-            .input("username", username)
-            .input('email', email)
-            .input('password', hashedPwd)
-            .execute("uspCreateUser", (error, record) => {
-                if (error) {
-                    res.json({
-                        Error: "A user with this username or email exists. user a different one"
-                    })
-                }
-                else {
-                    res.status(201).json({
-                        "data": record.recordset
-                    })
-                }
-            })
 
-    }
-    else {
-        res.json({ "data": "error connecting to db" })
+    try {
+        const resp = await DB.exec('uspCreateUser',{id,full_name,username,email,'password':hashedPwd,});
+        return res.status(201).json({
+            "status": "success",
+            "message": "User Registered Successfully"
+        })
+    
+    } catch (error) {
+        if(error.number == 2627){
+            return res.status(400).json(
+                {
+                    status: "error",
+                    message: "A user with this username or email exists. user a different one"
+                }
+            )
 
+        }
+        return res.status(500).json(
+            {
+                status: "error",
+                message: "Error adding user"
+            }
+        )
     }
 }
 
 
 export const loginUser = async (req, res) => {
-    const { username, password } = req.body
-    const pool = await mssql.connect(sqlConfig)
-    if (pool.connected) {
-        const user = (await pool.request().input("username", username).execute("uspGetUserPwd", async (error, record) => {
-            if (error) {
-                return res.json({ Error: error })
+    const { username, password } = req.body;
+    try {
+        const record = await (DB.exec('uspGetUserPwd',{username}))
+
+        if (record.recordset.length == 0) {
+            
+            return res.status(404).json(
+                {
+                    status: "error",
+                    message: "Seems You Do Not have An Account "
+                }
+            )
+
+        }
+        else{
+            const { password: hashedPwd, ...payload } = record.recordset[0];
+            const comparePwd = await bcrypt.compare(password, hashedPwd);
+
+            if (comparePwd) {
+                const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "3600s" })
+                
+                return res.status(200).json({
+                    status: "success",
+                    data: {
+                        message: "Login success",
+                         "token": token}
+                    })
             }
             else {
-                if (record.recordset.length == 0) {
-                    return res.json({ "message": "user not found " })
 
-                }
-                else {
-                    const { password: hashedPwd, ...payload } = record.recordset[0]
-                    const comparePwd = await bcrypt.compare(password, hashedPwd)
-                    console.log("is pass correct ? ", comparePwd);
-                    if (comparePwd) {
-                        const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "3600s" })
-                        return res.json({ "message": "Login success", "token": token })
+                return res.status(401).json(
+                    {
+                        status: "error",
+                        body: "invalid password"
                     }
-                    else {
-
-                        return res.json({ "message": "invalid password", "data": payload })
-                    }
-                }
+                )
             }
 
-        }))
-        console.log(user);
+        }
 
-    }
-    else {
-        res.json({ "data": "error connecting to db" })
+        
+    } catch (error) {
 
+        return res.status(500).json(
+            {
+                status: "error",
+                message: "Error Trying to log in"
+            }
+        )
     }
+        
+   
 }
 
 export const getUsers = async (req, res) => {
@@ -124,3 +141,5 @@ export const checkUser = async (req, res) => {
     console.log(req);
     res.status(200)
 }
+
+
