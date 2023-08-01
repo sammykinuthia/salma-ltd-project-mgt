@@ -1,0 +1,92 @@
+:root{
+  --bg-primary:#242424;
+  --bg-secondary:#C2E8F9;
+  --bg-accent:#1D9BF0;
+  --bg-white:white;
+  --bg-danger:#FF4444;
+
+  --text-primary:black;
+  --text-secondary:white;
+
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  display: grid;
+  background-color: rgb(243, 248, 248);
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  min-height: 100dvh;
+}
+
+.login_left {
+  padding: 20px;
+  background-color: var(--bg-primary);
+  color: white;
+  min-height: 100%;
+  text-align: center;
+}
+.login_left img{
+    width: 100%;
+    margin-top: 20px;
+}
+.login_right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  
+
+}
+.login_right h1 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+label{
+    font-weight: bold;
+}
+form {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 2px;
+  margin: .6rem 0 1.2rem;
+}
+button[type="submit"] {
+  color: white;
+  font-weight: bold;
+  padding: .7rem 2rem;
+  margin-top: 10px;
+  background-color: black;
+  border: none;
+  border-radius: 3px;
+}
+button[type="submit"]:hover{
+    background-color: #242424;
+    cursor: pointer;
+}
+
+.btn_signup {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+.btn_signup:hover{
+    color:rgb(46, 43, 43);
+}
