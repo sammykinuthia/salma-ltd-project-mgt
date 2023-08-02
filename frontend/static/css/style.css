@@ -33,8 +33,8 @@
   width: 100%;
   margin-top: 20px;
 }
-.login_right,
-confirm-email {
+
+.login_right,.form-register,confirm-email {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ confirm-email {
   justify-content: center;
   padding: 4rem;
 }
-.login_right h1 {
+.login_right h1 ,.form-register h1{
   margin-bottom: 15px;
   text-align: center;
 }
@@ -67,6 +67,9 @@ textarea {
   padding: 5px 10px;
   border-radius: 2px;
   margin: 0.6rem 0 1.2rem;
+}
+input[type="file"]{
+  cursor: pointer;
 }
 button[type="submit"] {
   color: white;
