@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salma Limited</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/global.css" />
+
+</head>
+<body>
+    <h1> This background should blur</h1>
+
+    <button class="add_project_modal"> Add Project</button>
+
+    <div class="modal hidden">
+        <button class="close-modal"> &times; </button>
+        <h3> Add A New Project</h3>
+        <form action="post" class="addproject">
+            <label for="Title"> Title</label>
+            <input type="text" id="proj_title" placeholder="Title" required /><br />
+
+            <label for="Description"> Description</label>
+            <textarea name="proj_description" id="proj_description" placeholder="Description"></textarea>
+
+            <label for="Start Date"> Start Date</label>
+            <input type="date" id="start_date" placeholder="Start Date" required /> <br />
+
+            <label for="End Date"> End Date</label>
+            <input type="date" id="end_date" placeholder="End Date" required /> <br />   
+            
+            <button type="button" id="Add"> Add Project </button>
+        </form>
+    </div>
+    <div class="overlay hidden"> </div>
+    <script src="script.js"></script>
+</body>
+</html>
