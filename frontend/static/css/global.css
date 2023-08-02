@@ -1,33 +1,232 @@
-/* *{
+:root {
+    --bg-primary: #242424;
+    --bg-secondary: #C2E8F9;
+    --bg-accent: #1D9BF0;
+    --bg-white: white;
+    --bg-danger: #FF4444;
+
+    --text-primary: black;
+    --text-secondary: white;
+
+
+}
+
+*,
+*::after,
+*::before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-input{
-    display: block;
-    width: 100%;
-    padding: .6rem 1rem;
-    border: none;
-    outline: none;
-    border-radius: .3rem;
-    background: rgb(235, 235, 235);
-}
-label{
-    display: block;
-    margin: 1rem 0;
-    padding: 1rem;
-    box-shadow: 0px 0px 1px;
+
+body {
+    width: 100vw;
+    min-height: 100dvh;
 }
 
-.container{
-    width: 70%;
-    margin: 1rem auto;
-}
-button{
-    padding: .6rem 1.2rem;
-    border-radius: .3rem;
-    background: #4485ff;
+button {
+    padding: .6rem 1.4rem;
     border: none;
-    cursor: pointer;
     outline: none;
-} */
+    background: var(--bg-accent);
+    border-radius: .3rem;
+    cursor: pointer;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.icon {
+    color: var(--bg-accent);
+    font-size: 1.6rem;
+}
+
+.title {
+    font-size: 1.4rem;
+}
+
+.title-main {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.bg-dark {
+    background: var(--bg-primary);
+}
+
+.main-body {
+    flex-grow: 1;
+    margin-top: 2rem;
+    display: flex;
+    gap:2rem;
+    flex-wrap: wrap;
+    width: 100%;
+
+    
+
+}
+
+.project-card {
+    background: var(--bg-secondary);
+    min-height: 8rem;
+    max-height: 14rem;
+    min-width: 12rem;
+    max-width: 20rem;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 1rem;
+}
+
+.status-icon {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: rgb(57, 216, 57);
+    overflow: hidden;
+
+}
+
+.status-icon-late {
+    background: rgb(216, 57, 57);
+}
+
+.icon-late {
+    color: rgb(216, 57, 57);
+}
+
+.icon-early {
+    color: #1D9BF0;
+    background: #000;
+}
+
+.project-title {
+    margin: .3rem 0;
+}
+
+.project-desc {
+    padding: .3rem 0;
+}
+
+.project-completion {
+    align-self: start;
+    padding: .3rem 0;
+    font-weight: bold;
+}
+
+.users {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.user-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3rem 1fr 1fr 1fr;
+    padding: .6rem;
+    box-shadow: 0px 2px 3px -2px;
+}
+
+.user-action {
+    align-self: end;
+}
+
+.project-section {
+    height: 100%;
+    justify-self: start;
+    display: grid;
+    grid-template-columns: 1fr 12rem;
+    gap: 2rem;
+}
+.project-users{
+    background: var(--bg-secondary);
+    flex-grow: 1;
+}
+.container{
+    display: flex;
+}
+aside {
+    color: white;
+    min-height: 100vh;
+    width: 20rem;
+    padding: 2rem;
+    /* border-top-left-radius: 2rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title-aside {
+    font-weight: 700;
+    font-style: italic;
+    font-size: 2rem;
+    text-align: center;
+}
+aside .title-item{
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: .6rem 1rem;
+
+}
+
+.title-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: .6rem 1rem;
+    cursor: pointer;
+}
+main{
+    flex-grow: 1;
+    margin: 0 3rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    gap: 2rem;
+    justify-content: start;
+    align-items: start;
+}
+.nav{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid grey;
+}
+.action-section{
+    display: flex;
+    gap: 2rem;
+}
+.profile-img{
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid;
+    padding: .3rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.profile-img iconify-icon{
+    display: block;
+    cursor: pointer;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}

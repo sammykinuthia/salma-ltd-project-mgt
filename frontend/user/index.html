@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/admin.css">
     <link rel="stylesheet" href="../static/css/global.css">
     <title>Document</title>
 </head>
@@ -15,15 +14,11 @@
         <aside class="bg-dark">
             <div class="upper">
                 <h3 class="title-aside">Salma Limited</h3>
-                <a href="/admin" class="title-item">
+                <a href="/user" class="title-item">
                     <iconify-icon class="icon" icon="ic:round-home"></iconify-icon>
                     <h3 class="title">Dashboard</h3>
                 </a>
-                <a href="/admin/users.html" class="title-item">
-                    <iconify-icon class="icon" icon="fa6-solid:users-line"></iconify-icon>
-                    <h3 class="title">Users</h3>
-                </a>
-                <a href="/admin/projects.html" class="title-item">
+                <a href="/user/projects.html" class="title-item">
                     <iconify-icon class="icon" icon="ic:baseline-verified"></iconify-icon>
                     <h3 class="title">Projects</h3>
                 </a>
@@ -37,12 +32,17 @@
         </aside>
         <main>
             <div class="nav">
-                <div class="title-main">All Projects</div>
+                <div class="title-main">Current Project</div>
                 <div class="action-section">
-                    <button>Add project</button>
+                    <!-- <button>Add project</button> -->
                     <div class="profile-img">
                         <iconify-icon  class="icon" icon="material-symbols:person"></iconify-icon>
                     </div>
+                </div>
+            </div>
+            <div class="main-body">
+                <div class="project-card">
+                    <h3 class="project-title">No Assigned project at the moment</h3>
                 </div>
             </div>
         </main>
@@ -50,6 +50,7 @@
     <!-- <script type="module" src="admin.js"></script> -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="../js/global.js"></script>
+
 </body>
 
 </html>

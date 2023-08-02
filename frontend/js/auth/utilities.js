@@ -31,6 +31,7 @@ export function getCurrentUser() {
         return JSON.parse(sessionStorage.getItem("currentUser"))
 
     } catch (error) {
+        
         return null
     }
 
