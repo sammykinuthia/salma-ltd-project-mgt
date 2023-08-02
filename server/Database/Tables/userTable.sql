@@ -26,3 +26,6 @@ CREATE TABLE verificationToken(
     verified_at DATE,
     FOREIGN KEY(user_id) REFERENCES users(id)
 )
+
+
+

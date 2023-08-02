@@ -1,7 +1,7 @@
 import mssql from 'mssql'
 import { sqlConfig } from '../Config/config.js'
 import { v4 } from 'uuid'
-
+import {DB} from "../DatabaseHelpers/index.js"
 export const getProjects = async (req, res) => {
 
     const pool = await mssql.connect(sqlConfig)
@@ -51,3 +51,41 @@ export const createProject = async (req, res) => {
     }
 }
 
+export const getProject = async(req,res)=>{
+    try {
+        const id = req.params.id;
+        console.log(id)
+
+        const response = await DB.exec('uspGetProjectById',{id})
+        console.log(response)
+
+        if(response.recordset.length == 0){
+            return res.status(404).json(
+                {
+                    status: "Error",
+                    message: "Project Not Found"
+                }
+            )
+        }
+        return res.status(200).json(
+            {
+                status: "success",
+                project: response['recordset']
+            }
+        )
+    
+
+
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(
+            {
+                status: "error",
+                message: "Error Getting Project"
+            }
+        )
+        
+    }
+
+}
