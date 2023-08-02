@@ -13,7 +13,7 @@ BEGIN
         (id,full_name, username, email, password)
     VALUES
         (@id, @full_name, @username, @email, @password);
-        SELECT * FROM users WHERE id=@id
+        SELECT id,full_name, username, email  FROM users WHERE id=@id
 
 END
 
@@ -27,9 +27,11 @@ GO
 
 CREATE  OR ALTER PROC uspGetUserPwd(@username VARCHAR(200)) AS
 BEGIN
-SELECT  id, username, email, full_name, is_admin, [password] FROM users WHERE username=@username
+SELECT  id, username, email, full_name, is_admin, [password],is_verified FROM users WHERE username=@username
 END;
-go
+
+
+
 
 
 CREATE OR ALTER  PROC uspGetUsers AS
@@ -45,3 +47,45 @@ SELECT id, username, email, full_name, is_admin  FROM users WHERE is_deleted = 0
 END
 
 EXEC uspGetUserPwd 'admin'
+
+
+CREATE OR ALTER  PROCEDURE uspVerifyTokenExists(@id VARCHAR(200), @code VARCHAR(200)) AS
+BEGIN
+	SELECT id FROM verificationToken WHERE user_id = @id AND code = @code
+END
+
+CREATE OR ALTER PROCEDURE uspUpdateVerificationTokenVerifiedAt(
+    @user_id VARCHAR(200))
+AS
+BEGIN
+    DECLARE @current_date DATE
+    SET @current_date = GETDATE()
+    
+    UPDATE verificationToken
+    SET verified_at = @current_date
+    WHERE user_id = @user_id;
+END;
+
+
+CREATE PROCEDURE uspAddVerificationCode(
+    @id VARCHAR(200),
+    @user_id VARCHAR(200),
+    @code VARCHAR(200)
+)
+AS
+BEGIN
+
+    DECLARE @current_date DATE
+    SET @current_date = GETDATE()
+
+    INSERT INTO verificationToken (id, user_id, code, created_at)
+    VALUES (@id, @user_id, @code, @current_date)
+END
+
+
+CREATE OR ALTER PROC uspUpdateIsVerified(@id VARCHAR(200)) AS
+BEGIN
+	UPDATE users
+    SET is_verified = 1
+    WHERE id = @id;
+END

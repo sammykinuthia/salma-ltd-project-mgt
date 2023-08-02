@@ -23,3 +23,10 @@ BEGIN
         SELECT * FROM project WHERE id=@id
 
 END
+
+CREATE OR ALTER PROC uspGetProjectById
+    @id VARCHAR(200)
+AS
+BEGIN
+    SELECT * FROM project WHERE id=@id
+END
