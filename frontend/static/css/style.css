@@ -1,14 +1,12 @@
-:root{
-  --bg-primary:#242424;
-  --bg-secondary:#C2E8F9;
-  --bg-accent:#1D9BF0;
-  --bg-white:white;
-  --bg-danger:#FF4444;
+:root {
+  --bg-primary: #242424;
+  --bg-secondary: #c2e8f9;
+  --bg-accent: #1d9bf0;
+  --bg-white: white;
+  --bg-danger: #ff4444;
 
-  --text-primary:black;
-  --text-secondary:white;
-
-
+  --text-primary: black;
+  --text-secondary: white;
 }
 
 * {
@@ -31,26 +29,25 @@
   min-height: 100%;
   text-align: center;
 }
-.login_left img{
-    width: 100%;
-    margin-top: 20px;
+.login_left img {
+  width: 100%;
+  margin-top: 20px;
 }
-.login_right {
+.login_right,
+confirm-email {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 4rem;
-  
-
 }
 .login_right h1 {
   margin-bottom: 15px;
   text-align: center;
 }
-label{
-    font-weight: bold;
+label {
+  font-weight: bold;
 }
 form {
   width: 100%;
@@ -61,25 +58,31 @@ form {
 input[type="text"],
 input[type="password"],
 input[type="file"],
-input[type="email"] {
+input[type="email"],
+input[type="date"],
+textarea {
   width: 100%;
   border: none;
+  height: 2rem;
   padding: 5px 10px;
   border-radius: 2px;
-  margin: .6rem 0 1.2rem;
+  margin: 0.6rem 0 1.2rem;
 }
 button[type="submit"] {
   color: white;
   font-weight: bold;
-  padding: .7rem 2rem;
+  padding: 0.7rem 2rem;
   margin-top: 10px;
   background-color: black;
   border: none;
   border-radius: 3px;
 }
-button[type="submit"]:hover{
-    background-color: #242424;
-    cursor: pointer;
+button[type="submit"]:hover {
+  background-color: #242424;
+  cursor: pointer;
+}
+#confirm-button {
+  margin-top: 50px;
 }
 
 .btn_signup {
@@ -88,6 +91,61 @@ button[type="submit"]:hover{
   color: black;
   cursor: pointer;
 }
-.btn_signup:hover{
-    color:rgb(46, 43, 43);
+.btn_signup:hover {
+  color: rgb(46, 43, 43);
+}
+
+
+/* Modal hidden and reveal */
+.modal {
+  margin: 20px auto;
+  width: 40%;
+  padding: 40px 20px;
+  background-color: var(--bg-primary);
+  border-radius: 10px;
+  
+  
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  color: var(--bg-secondary);
+}
+
+.modal h3{
+  text-align: center;
+  padding: 10px;
+}
+
+.hidden{ 
+  display:none; 
+ } 
+#Add{
+  background-color: var(--bg-accent);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#Add:hover{
+  cursor: pointer;
+  background-color: #3387be;
+}
+.close-modal {
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  font-size: 3rem;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.overlay {
+
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(1px);
+  z-index: 5;
 }
