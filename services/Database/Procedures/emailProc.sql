@@ -15,9 +15,27 @@ GO
 CREATE OR ALTER PROC uspVerifyUser(@id VARCHAR(200)) AS 
 BEGIN
     UPDATE users
-    SET is_verified = 0
-    -- WHERE id = @id
+    SET is_verified = 1
+    WHERE id = @id
 END;
 GO
 
-SELECT * FROM users
+CREATE OR ALTER PROC uspGetProjectAssignmentMail AS 
+BEGIN
+    SELECT u.id user_id, u.email, u.username, p.id project_id, p.name title, p.[description], p.start_date startDate, p.end_date endDate FROM projectUser pu
+    INNER JOIN users u
+    ON pu.user_id = u.id
+    INNER JOIN project p
+    ON pu.project_id = p.id
+    WHERE pu.is_sent = 0
+END;
+GO
+
+CREATE OR ALTER PROC uspSentProjectAssignmentMail(@user_id AS VARCHAR(200),@project_id AS VARCHAR(200)) AS 
+BEGIN
+    UPDATE projectUser
+    SET is_sent = 1
+    WHERE project_id = @project_id AND user_id = @user_id
+END;
+GO
+-- SELECT * FROM users
