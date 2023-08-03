@@ -29,3 +29,11 @@ SELECT * FROM project;
 -- VALUES
 -- ('a','cutting edges','the project location is elgeio marakwet','2023-07-07','2023-12-12')
 -- SELECT * FROM projects
+CREATE TABLE user_project_history
+(
+    user_id VARCHAR(200),
+    project_id VARCHAR(200),
+    assigned_at DATE NOT NULL DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (project_id) REFERENCES project(id)
+)
