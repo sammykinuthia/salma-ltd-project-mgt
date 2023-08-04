@@ -22,7 +22,7 @@ GO
 
 CREATE OR ALTER PROC uspGetProjectAssignmentMail AS 
 BEGIN
-    SELECT u.id user_id, u.email, u.username, p.id project_id, p.name title, p.[description], p.start_date startDate, p.end_date endDate FROM projectUser pu
+    SELECT u.id AS user_id, u.email, u.username, p.id AS project_id, p.name title, p.[description], p.start_date startDate, p.end_date endDate FROM projectUser pu
     INNER JOIN users u
     ON pu.user_id = u.id
     INNER JOIN project p
@@ -38,4 +38,7 @@ BEGIN
     WHERE project_id = @project_id AND user_id = @user_id
 END;
 GO
--- SELECT * FROM users
+-- SELECT * FROM projectUser
+
+-- UPDATE projectUser
+-- SET is_sent = 0
