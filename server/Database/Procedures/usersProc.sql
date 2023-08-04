@@ -94,5 +94,31 @@ BEGIN
 	UPDATE users
     SET is_verified = 1
     WHERE id = @id;
+
 END;
-go
+GO
+
+END
+
+
+
+CREATE OR ALTER PROCEDURE uspGetUserProject(
+    @user_id VARCHAR(200))
+AS
+BEGIN
+    SELECT 
+        p.id AS project_id,
+        p.name AS project_name,
+        p.description AS project_description,
+        p.created_at AS project_created_at,
+        p.start_date AS project_start_date,
+        p.end_date AS project_end_date,
+        p.completed_on AS project_completed_on
+    FROM 
+        users u
+    INNER JOIN 
+        project p ON u.project_id = p.id
+    WHERE 
+        u.id = @user_id;
+END;
+

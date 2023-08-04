@@ -7,7 +7,10 @@ export const usersRouter = Router()
 
 usersRouter.post('/register',createUser)
 usersRouter.post('/login',loginUser)
-usersRouter.get('/',getUsers)
+usersRouter.get('/',validateUser,getUsers)
 usersRouter.get('/:id',getUser)
 usersRouter.post('/check',validateUser,checkUser)
-usersRouter.post('/verify', verifyEmail)
+usersRouter.post('/verify',validateUser, verifyEmail)
+
+// usersRouter.post('/verify', verifyVerificationToken)
+

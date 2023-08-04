@@ -134,6 +134,13 @@ export const loginUser = async (req, res) => {
 }
 
 export const getUsers = async (req, res) => {
+    if(!req.info.is_admin){
+        return res.status(401).json({
+            status: "error",
+            message: "No authorization to get users"
+    })
+    
+    }
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
         pool.request().execute("uspGetUsers", (error, record) => {
