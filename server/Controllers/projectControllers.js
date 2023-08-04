@@ -20,7 +20,7 @@ export const getProjects = async (req, res) => {
             }
             else {
                 if (records.recordset.length == 0)
-                    return res.json({ "message": "not projects" })
+                    return res.json({ "message": "no projects" })
                 return res.json({ "data": records.recordset })
 
             }
@@ -98,6 +98,34 @@ export const getProject = async(req,res)=>{
 
 }
 
+
+export const assignProject = async(req, res)=>{
+    try {
+        const {user_id, project_id} = req.body
+        const pool = await mssql.connect(sqlConfig)
+        if(pool.connected){
+            const results = pool.request()
+            .input("project_id",project_id)
+            .input("user_id",user_id)
+            .execute("uspSetProjectUser", (error, records)=>{
+                if(error){
+                    console.log(error);
+                    res.json({error})
+                }
+                else{
+                    console.log(records.recordset);
+                    res.json({"data":records.recordset})
+                }
+            })
+        }
+        else{
+            res.json({Error:"error connecting to db"})
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+
 export const deleteProject = async(req, res) =>{
     try {
         if(!req.info.is_admin){
@@ -146,10 +174,40 @@ export const deleteProject = async(req, res) =>{
             }
         )
         
+
     }
 }
 
 
+
+
+export const getAssignedProject = async(req, res)=>{
+    try {
+        const {user_id, project_id} = req.body
+        const pool = await mssql.connect(sqlConfig)
+        if(pool.connected){
+            pool.request()
+            .input("project_id",project_id)
+            .input("user_id",user_id)
+            .execute("uspGetProjectUserById", (error, records)=>{
+                if(error){
+                    console.log(error);
+                    res.json({error})
+                }
+                else{
+                    console.log(records.recordset);
+                    res.json({"data":records.recordset})
+                }
+            })
+        }
+        else{
+            res.json({Error:"error connecting to db"})
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.json(error)
+    }
 
 export const getUserProject = async(req,res)=>{
     try {
@@ -223,6 +281,7 @@ export const getUserProjectsHistory = async(req,res)=>{
 }
 
 export const assignUserProject = async(req,res)=>{
+
 
 
 }

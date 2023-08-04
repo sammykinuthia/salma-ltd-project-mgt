@@ -35,13 +35,12 @@ export const createUser = async(req, res) =>{
             )
 
         }
-
-        
         return res.status(500).json(
             
             {
                 status: "error",
-                message: "Error adding user"
+                // message: "Error adding user"
+                'message':error
             }
         )
     }
@@ -196,7 +195,7 @@ const checkUser = async (req, res) => {
 
 
 
-const verifyVerificationToken = async(req,res)=>{
+const verifyEmail = async(req,res)=>{
     try {
         const { id, code } = req.body;
 
@@ -239,4 +238,4 @@ const verifyVerificationToken = async(req,res)=>{
 }
 
 
-export {checkUser, verifyVerificationToken}
+export {checkUser, verifyEmail}
