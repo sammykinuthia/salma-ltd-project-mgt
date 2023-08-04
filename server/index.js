@@ -16,5 +16,3 @@ app.use('/projects',projectRouter)
 app.use('/users',usersRouter)
 
 app.listen(PORT,()=>console.log(`Listening at http://localhost:${PORT}`))
-
-console.log("server");
