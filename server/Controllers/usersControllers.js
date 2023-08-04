@@ -141,7 +141,7 @@ export const getUsers = async (req, res) => {
                 return res.json({ Error: error })
             }
             else {
-                return res.json({ "users": record })
+                return res.json({ "users": record.recordset })
             }
         })
 
