@@ -82,6 +82,7 @@ export const getProject = async (req, res) => {
                 status: "success",
                 project: response['recordset']
             }
+
         )
 
     } catch (error) {
@@ -148,12 +149,12 @@ export const deleteProject = async (req, res) => {
             )
 
         }
-
         return res.status(401).json(
             {
                 status: "error",
                 message: "Project Not Deleted"
             }
+
         )
 
     } catch (error) {

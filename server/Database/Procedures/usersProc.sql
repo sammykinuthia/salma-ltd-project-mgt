@@ -52,11 +52,18 @@ EXEC uspGetUserPwd 'admin';
 GO
 
 
-CREATE OR ALTER  PROCEDURE uspVerifyTokenExists(@id VARCHAR(200), @code VARCHAR(200)) AS
+CREATE OR ALTER PROCEDURE uspVerifyTokenExists
+    @email VARCHAR(200),
+    @code VARCHAR(200)
+AS
 BEGIN
-	SELECT id FROM verificationToken WHERE user_id = @id AND code = @code
-END;
-GO
+    SELECT vt.id
+    FROM verificationToken vt
+    INNER JOIN users u ON vt.user_id = u.id
+    WHERE u.email = @email AND vt.code = @code;
+END
+
+
 
 CREATE OR ALTER PROCEDURE uspUpdateVerificationTokenVerifiedAt(
     @user_id VARCHAR(200))
@@ -68,6 +75,13 @@ BEGIN
     UPDATE verificationToken
     SET verified_at = @current_date
     WHERE user_id = @user_id;
+
+    
+    UPDATE user
+    SET verified_at = 1
+    WHERE id = @user_id;
+
+
 END;
 GO
 

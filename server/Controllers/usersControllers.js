@@ -195,11 +195,15 @@ const checkUser = async (req, res) => {
 
 
 
-const verifyEmail = async(req,res)=>{
-    try {
-        const { id, code } = req.body;
 
-        const response = await DB.exec('uspVerifyTokenExists',{id,code});
+const verifyEmail = async(req,res)=>{
+
+    try {
+        const { email, code } = req.body;
+
+
+        const response = await DB.exec('uspVerifyTokenExists',{email,code});
+
 
         if(response.recordset.length == 0){
 
@@ -213,9 +217,10 @@ const verifyEmail = async(req,res)=>{
             
         }
         else{
+        console.log(response.recordset[0].id)
         const respo = await DB.exec('uspUpdateVerificationTokenVerifiedAt',{user_id:response.recordset[0].id});
-        await DB.exec('uspUpdateIsVerified',{id})
 
+        console.log(respo)
             return res.status(200).json(
                 {
                  status: "success",
@@ -238,4 +243,6 @@ const verifyEmail = async(req,res)=>{
 }
 
 
+
 export {checkUser, verifyEmail}
+
