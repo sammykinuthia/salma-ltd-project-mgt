@@ -14,7 +14,7 @@ registerForm.addEventListener("submit", async e => {
     if(status == 201){
         console.log(resp);
         localStorage.setItem("maillllin", email)
-        setTimeout(window.location.replace('./confirmcode.html'), 3000)
+        setTimeout(window.location.replace('confirmcode.html'), 3000)
         
     }else{
         document.querySelector(".error").innerHTML = `<small> ${resp.message}</small>`;

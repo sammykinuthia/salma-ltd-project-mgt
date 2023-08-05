@@ -10,7 +10,7 @@ usersRouter.post('/login',loginUser)
 usersRouter.get('/',validateUser,getUsers)
 usersRouter.get('/:id',getUser)
 usersRouter.post('/check',validateUser,checkUser)
-usersRouter.post('/verify',validateUser, verifyEmail)
+usersRouter.post('/verify', verifyEmail)
 
 // usersRouter.post('/verify', verifyVerificationToken)
 

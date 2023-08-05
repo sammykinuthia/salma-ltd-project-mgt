@@ -61,32 +61,26 @@ BEGIN
     FROM verificationToken vt
     INNER JOIN users u ON vt.user_id = u.id
     WHERE u.email = @email AND vt.code = @code;
-END
-
-
-
-CREATE OR ALTER PROCEDURE uspUpdateVerificationTokenVerifiedAt(
-    @user_id VARCHAR(200))
-AS
-BEGIN
-    DECLARE @current_date DATE
-    SET @current_date = GETDATE()
-    
-    UPDATE verificationToken
-    SET verified_at = @current_date
-    WHERE user_id = @user_id;
-
-    
-    UPDATE user
-    SET verified_at = 1
-    WHERE id = @user_id;
-
-
 END;
 GO
 
 
-CREATE PROCEDURE uspAddVerificationCode(
+CREATE OR ALTER PROCEDURE uspUpdateVerificationTokenVerifiedAt(
+    @token_id VARCHAR(200))
+AS
+BEGIN
+    UPDATE verificationToken
+    SET verified_at = GETDATE()
+    WHERE id = @token_id;
+    UPDATE users
+    SET is_verified = 1
+    WHERE id = (SELECT user_id FROM verificationToken WHERE id=@token_id);
+END;
+GO
+
+
+
+CREATE OR ALTER PROCEDURE uspAddVerificationCode(
     @id VARCHAR(200),
     @user_id VARCHAR(200),
     @code VARCHAR(200)
@@ -135,3 +129,5 @@ BEGIN
         u.id = @user_id;
 END;
 
+
+-- SELECT * FROM verificationToken
