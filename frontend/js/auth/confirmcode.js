@@ -1,6 +1,6 @@
 import { useFetchPost } from "./utilities.js"
 
-const url = "http://localhost:3000/"
+const url = "http://localhost:3000"
 
 
 const renderForm = ()=>{
@@ -22,7 +22,7 @@ document.getElementById("confirm-email").addEventListener("submit", async(e)=>{
     console.log(email)
     e.preventDefault()
     const code = document.getElementById("confirm-email-code").value;
-    const [resp,status]  = await useFetchPost(`${url}users/verify`,{email, code})
+    const [resp,status]  = await useFetchPost(`${url}/users/verify`,{email, code})
 
 
     if(status == 200){

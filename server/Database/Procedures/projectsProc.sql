@@ -109,4 +109,3 @@ BEGIN
         uph.assigned_at DESC;
 END;
 
-
