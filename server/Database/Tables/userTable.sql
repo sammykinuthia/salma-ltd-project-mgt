@@ -13,6 +13,7 @@ CREATE TABLE users
     deleted_at DATE,
     is_deleted BIT DEFAULT 0,
     is_verified BIT DEFAULT 0,
+    is_sent BIT DEFAULT 0,
     is_admin BIT DEFAULT 0,
     project_id VARCHAR(200),
     FOREIGN KEY (project_id) REFERENCES project(id)
@@ -29,3 +30,6 @@ CREATE TABLE verificationToken(
 
 
 
+-- ALTER TABLE users
+-- ADD is_sent BIT DEFAULT 0
+-- select * from users

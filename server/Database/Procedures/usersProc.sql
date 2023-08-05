@@ -98,7 +98,6 @@ BEGIN
 END;
 GO
 
-END
 
 
 
