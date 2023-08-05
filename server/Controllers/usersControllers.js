@@ -48,7 +48,6 @@ export const createUser = async(req, res) =>{
 
 
 export const loginUser = async (req, res) => {
-    
     try {
         const { username, password } = req.body;
         if(!username){
@@ -58,7 +57,6 @@ export const loginUser = async (req, res) => {
                     message: "Body Must have username"
                 }
             )
-
         }
         if(!password){
             return res.status(401).json(
@@ -67,11 +65,8 @@ export const loginUser = async (req, res) => {
                     message: "Body Must have password"
                 }
             )
-
         }
-        const record = await (DB.exec('uspGetUserPwd',{username}))
-        
-       
+        const record = await (DB.exec('uspGetUserPwd',{username}))     
         if (record.recordset.length == 0) {
         
             return res.status(404).json(
@@ -80,7 +75,6 @@ export const loginUser = async (req, res) => {
                     message: "Seems You Do Not have An Account "
                 }
             )
-
         }
         if(record.recordset[0].is_verified == 0){
             return res.status(401).json(
@@ -93,10 +87,8 @@ export const loginUser = async (req, res) => {
         else{
             const { password: hashedPwd, ...payload } = record.recordset[0];
             const comparePwd = await bcrypt.compare(password, hashedPwd);
-
             if (comparePwd) {
                 const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "3600s" })
-                
                 return res.status(200).json({
                     status: "success",
                     data: {
@@ -112,16 +104,14 @@ export const loginUser = async (req, res) => {
             }
             else{
                 return res.status(403).json({
+                    
                     status: "error",
                     message: "Password is not correct"
                 })
             }
-          
-        }
-
-        
-    } catch (error) {
-        
+        } 
+    }
+     catch (error) {
         return res.status(500).json(
             {
                 status: "error",

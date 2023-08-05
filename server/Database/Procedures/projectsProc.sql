@@ -58,7 +58,6 @@ GO
 
 -- SELECT * FROM projectUser
 
-END
 
 
 CREATE OR ALTER PROCEDURE uspGetCurrentUserProject(
@@ -82,6 +81,7 @@ BEGIN
     WHERE 
         u.id = @user_id;
 END;
+GO
 
 
 
