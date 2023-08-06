@@ -51,7 +51,7 @@ export const createProject = async (req, res) => {
                 else {
                     if (records.recordset.length == 0)
                         return res.json({ "message": "not projects" })
-                    return res.json({ "data": records.recordset })
+                    return res.status(200).json({ "data": records.recordset })
 
                 }
             })
@@ -82,7 +82,6 @@ export const getProject = async (req, res) => {
                 status: "success",
                 project: response['recordset']
             }
-
         )
 
     } catch (error) {
@@ -149,12 +148,12 @@ export const deleteProject = async (req, res) => {
             )
 
         }
+
         return res.status(401).json(
             {
                 status: "error",
                 message: "Project Not Deleted"
             }
-
         )
 
     } catch (error) {
