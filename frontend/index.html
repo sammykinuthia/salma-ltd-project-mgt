@@ -5,12 +5,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./static/css/global.css">
-    <title>Document</title>
+    <title>Salma Limited</title>
+
+    <style>
+        .container{
+            background-image: url("./static/images/pexels-alena-darmel-7706930.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 80vh;
+            display: grid;
+            place-items: center;
+            align-items: center;
+        }
+        .main{
+            color:  var(--text-secondary);
+            text-align: center;
+        }
+        .dashboard-user, .dashboard-admin{
+             display: none;
+        }
+        .nav{
+            height: 5%;
+        }
+
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>hello <span class="username"></span></h1>
+    <div class="nav">
+        <p>
+            Salma Limited
+        </p>
+
+        <div class="buttons">
+            <a class="button" href="./auth/login.html">Sign In</a>
+            <a class="button" style="background-color: var(--bg-white); border: var(--bg-accent) 1px solid;" href="./auth/register.html">Sign Up</a>
+            
+        </div>
+        <div class="dashboard-user">
+            <a class="button" href="./user/index.html">Dashboard</a>
+        </div>
+        <div class="dashboard-admin">
+            <a class="button" href="./admin/index.html">Dashboard</a>
+        </div>
+
     </div>
+    <div class="container">
+    
+       <div class="main">
+        <h1>Salma Limited</h1>
+        <p>
+            Your business partner
+        </p>
+       </div>
+    </div>
+
+    <section>
+        <h2>About Us</h2>
+    </section>
+
+    <section>
+        <h2> How It Works</h2>
+    </section>
+
     <script type="module" src="./js/auth/checklogin.js"></script>
 </body>
 </html>

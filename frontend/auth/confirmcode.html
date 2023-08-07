@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Salma Limited</title>
-    <link rel="stylesheet" href="../static/css/style.css" />
     <link rel="stylesheet" href="../static/css/global.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 
 <body>
@@ -20,10 +20,14 @@
         </div>
         <div class="login_right">
             <h1>Confirm Email</h1>
-            <form id="confirm-email">
 
+            <p> <small class="error"></small></p>
+            <form id="confirm-email">
+                 
                 <label for="confirm">Enter Code Sent to Email</label><br />
-                <input type="text" id="confirm-email" placeholder="123456" required /><br />
+                <input type="text" id="confirm-email-code" placeholder="123456" required /><br />
+
+
 
                 <button type="submit" id="confirm_button">Confirm Code</button>
             </form>
@@ -35,6 +39,8 @@
     </div>
 
     <script type="module" src="../js/auth/login.js"></script>
+
+    <script type="module" src="../js/auth/confirmcode.js"></script>
 
 </body>
 

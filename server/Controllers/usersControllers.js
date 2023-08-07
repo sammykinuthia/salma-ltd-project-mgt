@@ -4,11 +4,11 @@ import mssql from 'mssql'
 import { sqlConfig } from "../Config/config.js"
 import jwt from "jsonwebtoken"
 import dotenv from 'dotenv'
-import {DB} from "../DatabaseHelpers/index.js"
+import { DB } from "../DatabaseHelpers/index.js"
 dotenv.config()
 
-export const createUser = async(req, res) =>{
-    
+export const createUser = async (req, res) => {
+
     try {
 
         const { full_name, username, email, password } = req.body;
@@ -16,32 +16,31 @@ export const createUser = async(req, res) =>{
         const id = v4()
         const code_id = v4()
         const code = v4().slice(0, 6)
-        const resp = await DB.exec('uspCreateUser',{id,full_name,username,email,'password':hashedPwd,});
+        const resp = await DB.exec('uspCreateUser', { id, full_name, username, email, 'password': hashedPwd, });
         const user_id = resp.recordset[0]['id']
-        const codeResp = await DB.exec('uspAddVerificationCode',{id:code_id, user_id, code, })
-        
+        const codeResp = await DB.exec('uspAddVerificationCode', { id: code_id, user_id, code, })
+
         return res.status(201).json({
-             "status": "success",
-             "data": resp.recordset
+            "status": "success",
+            "data": resp.recordset
         })
-    
+
     } catch (error) {
-        if(error.number == 2627){
+        if (error.number == 2627) {
             return res.status(400).json(
                 {
-                    
+
                     message: "A user with this username or email exists. user a different one"
                 }
             )
 
         }
-
-        
         return res.status(500).json(
-            
+
             {
                 status: "error",
-                message: "Error adding user"
+                // message: "Error adding user"
+                'message': error
             }
         )
     }
@@ -49,41 +48,35 @@ export const createUser = async(req, res) =>{
 
 
 export const loginUser = async (req, res) => {
-    
     try {
         const { username, password } = req.body;
-        if(!username){
+        if (!username) {
             return res.status(401).json(
                 {
                     status: "error",
                     message: "Body Must have username"
                 }
             )
-
         }
-        if(!password){
+        if (!password) {
             return res.status(401).json(
                 {
                     status: "error",
                     message: "Body Must have password"
                 }
             )
-
         }
-        const record = await (DB.exec('uspGetUserPwd',{username}))
-        
-       
+        const record = await (DB.exec('uspGetUserPwd', { username }))
         if (record.recordset.length == 0) {
-        
+
             return res.status(404).json(
                 {
                     status: "error",
                     message: "Seems You Do Not have An Account "
                 }
             )
-
         }
-        if(record.recordset[0].is_verified == 0){
+        if (record.recordset[0].is_verified == 0) {
             return res.status(401).json(
                 {
                     status: "error",
@@ -91,38 +84,35 @@ export const loginUser = async (req, res) => {
                 }
             )
         }
-        else{
+        else {
             const { password: hashedPwd, ...payload } = record.recordset[0];
             const comparePwd = await bcrypt.compare(password, hashedPwd);
-
             if (comparePwd) {
                 const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "3600s" })
-                
                 return res.status(200).json({
                     status: "success",
                     data: {
-                        user:{
+                        user: {
                             id: record['recordset'][0]['id'],
                             user_name: record['recordset'][0]['user_name'],
-                            full_name: record['recordset'][0]['full_name']
-                         },
+                            full_name: record['recordset'][0]['full_name'],
+                            is_admin: record['recordset'][0]['is_admin'],
+                        },
                         message: "Login success",
                         "token": token
-                        }
-                    })
+                    }
+                })
             }
-            else{
+            else {
                 return res.status(403).json({
+
                     status: "error",
                     message: "Password is not correct"
                 })
             }
-          
         }
-
-        
-    } catch (error) {
-        
+    }
+    catch (error) {
         return res.status(500).json(
             {
                 status: "error",
@@ -130,17 +120,17 @@ export const loginUser = async (req, res) => {
             }
         )
     }
-        
-   
+
+
 }
 
 export const getUsers = async (req, res) => {
-    if(!req.info.is_admin){
+    if (!req.info.is_admin) {
         return res.status(401).json({
             status: "error",
             message: "No authorization to get users"
-    })
-    
+        })
+
     }
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
@@ -196,42 +186,41 @@ const checkUser = async (req, res) => {
 
 
 
-const verifyVerificationToken = async(req,res)=>{
+
+const verifyEmail = async (req, res) => {
+
     try {
-        const { id, code } = req.body;
-
-        const response = await DB.exec('uspVerifyTokenExists',{id,code});
-
-        if(response.recordset.length == 0){
-
+        const { email, code } = req.body;
+        const response = await DB.exec('uspVerifyTokenExists', { email, code });
+        if (response.recordset.length == 0) {
             return res.status(404).json(
                 {
                     status: "error",
                     message: "Invalid Code"
                 }
             )
-        
-            
-        }
-        else{
-        const respo = await DB.exec('uspUpdateVerificationTokenVerifiedAt',{user_id:response.recordset[0].id});
-        await DB.exec('uspUpdateIsVerified',{id})
 
+
+        }
+        else {
+            console.log(response.recordset[0].id)
+            const respo = await DB.exec('uspUpdateVerificationTokenVerifiedAt', { token_id: response.recordset[0].id });
+            console.log(respo)
             return res.status(200).json(
                 {
-                 status: "success",
+                    status: "success",
                     message: "Account Verified Successfully"
                 }
-        )
+            )
 
         }
-        
+
     } catch (error) {
-        
+
         return res.status(400).json(
             {
-             status: "Error",
-             message: "Error Processing Code"
+                status: "Error",
+                message: "Error Processing Code"
             }
         )
     }
@@ -239,4 +228,6 @@ const verifyVerificationToken = async(req,res)=>{
 }
 
 
-export {checkUser, verifyVerificationToken}
+
+export { checkUser, verifyEmail }
+

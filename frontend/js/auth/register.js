@@ -13,9 +13,11 @@ registerForm.addEventListener("submit", async e => {
     const [resp,status]  = await useFetchPost('http://localhost:3000/users/register',data)
     if(status == 201){
         console.log(resp);
-        setTimeout(window.location.replace('/auth/login.html'), 3000)
+        localStorage.setItem("maillllin", email)
+        setTimeout(window.location.replace('confirmcode.html'), 3000)
         
     }else{
+        document.querySelector(".error").innerHTML = `<small> ${resp.message}</small>`;
         console.log("error registering", resp);
     }
 

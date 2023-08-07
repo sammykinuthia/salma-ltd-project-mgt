@@ -1,4 +1,4 @@
-import { getCurrentUser } from "../js/auth/utilities.js";
+import { getCurrentUser } from "./auth/utilities.js";
 
 const currentUser = getCurrentUser()
 if(!currentUser){

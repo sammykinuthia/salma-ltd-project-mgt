@@ -9,14 +9,21 @@ loginForm.addEventListener("submit",async e=>{
     const password = document.getElementById("passwd").value
     const data = {username,password}
     const [resp,status] = await useFetchPost("http://localhost:3000/users/login",data)
+     console.log(resp)
     if(status == 200){
         localStorage.setItem("token", resp.data.token)
-        console.log((resp));
-        setInterval( window.location.replace("/"),4000)
-       
-    }
-    else{
         console.log(resp);
+        if(resp.data.user.is_admin){
+            setInterval( window.location.replace("../admin/"),4000)
+        }
+        else{
+            setInterval( window.location.replace("../user/"),4000)
+        }
+
+    }
+
+    else{
+        document.querySelector(".error").innerHTML = `<small> ${resp.message}</small>`;
     }
 
 })
