@@ -1,4 +1,4 @@
-use Salma;
+use SalmaConstructions;
 go
 
 CREATE OR ALTER  PROC uspGetProjects AS
@@ -108,6 +108,7 @@ BEGIN
     ORDER BY 
         uph.assigned_at DESC;
 END;
+GO
 
 CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject @id VARCHAR(200)
 AS
