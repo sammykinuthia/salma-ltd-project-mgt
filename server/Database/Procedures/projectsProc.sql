@@ -109,3 +109,11 @@ BEGIN
         uph.assigned_at DESC;
 END;
 
+CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject @id VARCHAR(200)
+AS
+	BEGIN
+		SELECT u.id, u.full_name, u.username, u.email
+		FROM users u
+		JOIN projectUser pu ON u.id = pu.user_id
+		WHERE pu.project_id = @id;
+	END;
