@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="bg-dark">
+            <div class="upper">
+                <h3 class="title-aside">Salma Limited</h3>
+                <a href="/admin" class="title-item">
+                    <iconify-icon class="icon" icon="ic:round-home"></iconify-icon>
+                    <h3 class="title">Dashboard</h3>
+                </a>
+                <a href="/admin/users.html" class="title-item">
+                    <iconify-icon class="icon" icon="fa6-solid:users-line"></iconify-icon>
+                    <h3 class="title">Users</h3>
+                </a>
+                <a href="/admin/projects.html" class="title-item">
+                    <iconify-icon class="icon" icon="ic:baseline-verified"></iconify-icon>
+                    <h3 class="title">Projects</h3>
+                </a>
+            </div>
+
+            <div id="logout" class="title-item">
+                <iconify-icon class="icon" icon="solar:logout-2-outline"></iconify-icon>
+                <h3 class="title">Logout</h3>
+            </div>
+        </aside>
+        <main>
+            <div class="nav">
+                <div class="title-main">All Projects</div>
+                <div class="action-section">
+                    <div class="profile-img">
+                        <iconify-icon class="icon" icon="material-symbols:person"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="main-body">
+
+                <div class="modal hidden">
+                    <h3> Add A New Project</h3>
+                    <form  class="addproject"  id="addproject"  method="get">
+                        <h6 id="error"></h6>
+                        <label for="Title"> Title</label>
+                        <input type="text" id="proj_title" placeholder="Title" required /><br />
+
+                        <label for="Description"> Description</label>
+                        <textarea name="proj_description" id="proj_description" placeholder="Description"></textarea>
+
+                        <label for="Start Date"> Start Date</label>
+                        <input type="date" id="start_date" placeholder="Start Date" required /> <br />
+
+                        <label for="End Date"> End Date</label>
+                        <input type="date" id="end_date" placeholder="End Date" required /> <br />
+
+                        <button type="submit" id="Add"> Add Project </button>
+                    </form>
+                </div>
+                <div class="overlay hidden"> </div>
+            </div>
+        </main>
+    </div>
+    <!-- <script type="module" src="admin.js"></script> -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script type="module"  src="../js/addProject.js"></script>
+    <script src="../js/global.js"></script>
+</body>
+
+</html>

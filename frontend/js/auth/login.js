@@ -12,16 +12,16 @@ loginForm.addEventListener("submit",async e=>{
      console.log(resp)
     if(status == 200){
         localStorage.setItem("token", resp.data.token)
-        if(resp.is_admin){
+        console.log(resp);
+        if(resp.data.user.is_admin){
             setInterval( window.location.replace("../admin/"),4000)
         }
         else{
             setInterval( window.location.replace("../user/"),4000)
         }
-      
-       
-        
+
     }
+
     else{
         document.querySelector(".error").innerHTML = `<small> ${resp.message}</small>`;
     }

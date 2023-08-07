@@ -1,19 +1,20 @@
+const token = localStorage.getItem("token")
+
 export async function useFetchPost(url, data) {
     const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",token },
         body: JSON.stringify(data)
     })
     const res = await response.json()
-    console.log(res);
+    // console.log(res);
     return [res, response.status]
 
 }
 
-export async function useFetchGet(url,token) {
-    const response = await fetch(url, {
-         headers: { "Content-Type": "application/json", token }
-        })
+
+export async function useFetchGet(url) {
+    const response = await fetch(url, { headers: { "Content-Type": "application/json", token } })
     return await response.json()
 
 }

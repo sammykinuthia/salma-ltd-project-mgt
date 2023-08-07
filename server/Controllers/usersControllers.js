@@ -95,7 +95,8 @@ export const loginUser = async (req, res) => {
                         user: {
                             id: record['recordset'][0]['id'],
                             user_name: record['recordset'][0]['user_name'],
-                            full_name: record['recordset'][0]['full_name']
+                            full_name: record['recordset'][0]['full_name'],
+                            is_admin: record['recordset'][0]['is_admin'],
                         },
                         message: "Login success",
                         "token": token

@@ -24,7 +24,7 @@ body {
     min-height: 100dvh;
 }
 
-button,.button {
+button,.button ,.btn{
     padding: .6rem 1.4rem;
     border: none;
     outline: none;
