@@ -32,41 +32,54 @@
                 <iconify-icon class="icon" icon="solar:logout-2-outline"></iconify-icon>
                 <h3 class="title">Logout</h3>
             </div>
+
         </aside>
         <main>
             <div class="nav">
-                <div class="title-main"><h2> </h2> </div>
-                <div class="action-section">
-                    <!-- <button>Add project</button> -->
+                <div class="title-main"></div>
+            
+                <!-- <div class="action-section">
+                    <div class="fielter-section">
+                        <h4>Fielter By: </h4>
+                        <select name="" id="users-list-sort">
+                            <option value="all">All Users</option>
+                            <option value="verified">Verified</option>
+                            <option value="unverified">UnVerified</option>
+                        </select>
+                    </div>
                     <div class="profile-img">
                         <iconify-icon class="icon" icon="material-symbols:person"></iconify-icon>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="main-body project-details">
-                <div class="project-section">
-                    <div class="project-body">
-                        <p class="project-desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum lorem
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo sint libero at quos
-                            tempora sunt rerum? Sapiente eveniet omnis dolores, excepturi saepe nesciunt alias quo
-                            incidunt earum voluptatum, expedita odio natus ex delectus eius ut esse dolorem quos sunt
-                            fugiat! explicabo voluptatibus Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Harum ut molestias placeat provident sunt non voluptate voluptas, reprehenderit magnam est
-                            laborum tempora et velit enim dolores delectus totam reiciendis qui? </p>
-                        <div class="project-completion">Completed by - <span id="completion-date">20/07/2023</span>
+            <div class="main-body user-main-body">
+                    <div class="users-header">
+                        <div class=""></div>
+                        <h4 class="full_name">Full Name</h4>
+                        <h4 class="email">Email</h4>
+                        <h4 class="project">Current Project</h4>
+                 
+                    </div>
+                <div id="users" class="users">
+                    <div class="user-card">
+                        <div class="user-select">
+                            <input type="checkbox" id="">
+                        </div>
+                        <div class="user-name-section">
+                            <h4 class="user-name">Sammy kigo</h4>
+                        </div>
+                        <div class="user-email-section">
+                            <p class="user-email">Sammykigo@gmail.com</p>
+                        </div>
+                        <div class="user-project-section">
+                            <p class="user-project">Dam construction</p>
                         </div>
                     </div>
-                    <div class="project-users">
-                        <ul class="list-users">
-
-                        </ul>
-                        
-
-                        <a class="button" href="./assign.html">Assign Users</a>
-                       
-                    </div>
+                   
                 </div>
-
+                <div class="user-action">
+                    <button id="assign">assign to project</button>
+                </div>
             </div>
         </main>
     </div>

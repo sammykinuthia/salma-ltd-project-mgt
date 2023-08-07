@@ -1,11 +1,11 @@
-import { getCurrentUser, useFetchGet,url} from "./auth/utilities.js";
+import { getCurrentUser, useFetchGet,url,useFetchPost} from "./auth/utilities.js";
 import { formatDate } from "./global.js";
 
 console.log(window.location.href)
 const currentURL = window.location.href;
 const path = new URL(currentURL).pathname;
 
-console.log(path)
+
 
 
 const currentUser = getCurrentUser()
@@ -14,8 +14,8 @@ if(!currentUser){
     
 }
 
-console.log(currentUser);
-document.getElementById("username").textContent = currentUser.username
+// console.log(currentUser);
+// document.getElementById("username").textContent = currentUser.username
 
 
 if(path == "/admin/"){
@@ -83,13 +83,16 @@ if(path == "/admin/project.html"){
         const [resp,status]= await(useFetchGet(`${url}projects/${id}`));
         const project = resp['project'][0];
         if(status == 200){
-            document.querySelector(".project-desc").innerHTML = project.description
-            document.querySelector("#completion-date").innerHTML = formatDate(project.end_date)
+            document.querySelector(".project-desc").innerHTML = project.description;
+            document.querySelector("#completion-date").innerHTML = formatDate(project.end_date);
+            document.querySelector(".title-main").innerHTML = project.name;
+            localStorage.setItem("projectName",project.name);
 
         }
         else{
             document.querySelector(".project-desc").innerHTML = "Error";
             document.querySelector("#completion-date").innerHTML = "Error";
+           
 
 
         }
@@ -128,7 +131,80 @@ if(path == "/admin/project.html"){
 projectDetails();
 }
      
+if(path == "/admin/assign.html"){
 
+    const id = localStorage.getItem("projId");
+   
+    const fetchUsers = async()=>{
+        const [resp,status]= await(useFetchGet(`${url}users/`));
+        const users = resp.users;
+        const users_ = users.filter(user => user.projects == null && user.is_verified && !user.is_admin);
+        
+        let html = "";
+        const container = document.getElementById("users")
+        if(status == 200){
+            document.querySelector(".title-main").innerHTML = localStorage.getItem("projectName")?? "Projrct"
+            users_.forEach((user) => {
+                
+              html += `
+              <div class="user-select">
+                <input type="checkbox" id="${user.id}">
+              </div>
+              <div class="user-name-section">
+                <h4 class="user-name">${user.full_name}</h4>
+              </div>
+              <div class="user-email-section">
+                <p class="user-email">${user.email}</p>
+              </div>
+            
+            `;
+            });
+    
+            container.innerHTML = html;
+             
+        }
+        else if(status == 404 || users_.length == 0){
+            container.innerHTML = "No unassigned users";
+        }
+        else{
+            container.innerHTML = "Error";
+        }
+    
+    }
+
+    const button = document.querySelector("#assign")
+    button.addEventListener("click",async()=>{
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        let checkedIds = []
+    
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+              const id = checkbox.id;
+              checkedIds.push(id);
+            }
+          });
+
+        console.log(checkedIds)
+
+
+        const [resp,status]= await(useFetchPost(`${url}projects/assign/`,{'user_ids': checkedIds, 'project_id':id}));
+
+        
+
+        fetchUsers();
+    })
+   
+    
+    
+
+
+
+
+
+
+
+fetchUsers();
+}
 
 
 

@@ -16,11 +16,11 @@ document.getElementById("addproject").addEventListener("submit", async(e) => {
     console.log(data);
    const [res, code] = await useFetchPost("http://localhost:3000/projects", data)
    if(code == 200){
-    window.location.replace("./projects.html")
+    window.location.replace("./index.html")
    }
    else{
     document.getElementById('error').textContent = res.message
    }
-   console.log(res);
-   console.log(code);
+//    console.log(res);
+//    console.log(code);
 })

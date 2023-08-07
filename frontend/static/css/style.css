@@ -120,7 +120,7 @@ button[type="submit"]:hover {
   text-align: center;
   padding: 10px;
 }
-
+.project-card{cursor: pointer;}
 
 @media screen and (max-width: 769px ){
     .container{

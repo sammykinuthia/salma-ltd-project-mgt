@@ -264,10 +264,11 @@ a{
     display: flex;
     gap: .3rem;
     align-items: center;
-
-@media screen and (max-width:676px){
+}
+.project-card{cursor: pointer;}
+/* @media screen and (max-width:676px){
     aside{
         display: none;
     }
     
-}
+} */
