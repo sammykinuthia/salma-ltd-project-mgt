@@ -16,7 +16,7 @@ CREATE OR ALTER PROC uspVerifyUser(@id VARCHAR(200)) AS
 BEGIN
     UPDATE users
     SET is_verified = 1
-    WHERE id = @id
+    WHERE id = @idd
 END;
 GO
 
@@ -42,3 +42,7 @@ GO
 
 -- UPDATE projectUser
 -- SET is_sent = 0
+
+-- SELECT * FROM proje
+
+-- CREATE OR ALTER PROC uspProjectIsComplete(@user)
