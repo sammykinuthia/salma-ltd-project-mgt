@@ -6,14 +6,15 @@ import { DB } from "../DatabaseHelpers/index.js"
 
 export const getProjects = async (req, res) => {
     const pool = await mssql.connect(sqlConfig)
-    if (!req.info.is_admin) {
-        return res.status(401).json(
-            {
-                status: "Error",
-                message: "No Access to view projects"
-            }
-        )
-    }
+
+    // if (!req.info.is_admin) {
+    //     return res.status(401).json(
+    //         {
+    //             status: "Error",
+    //             message: "No Access to view projects"
+    //         }
+    //     )
+    // }
 
     if (pool.connected) {
         pool.request().execute("uspGetProjects", (error, records) => {
@@ -268,6 +269,7 @@ export const getUserProjectsHistory = async (req, res) => {
 
     }
 }
+
 
 export const assignUserProject = async (req, res) => {
     console.log("assign user");
