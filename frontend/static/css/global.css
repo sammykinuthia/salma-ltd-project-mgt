@@ -32,6 +32,13 @@ button, .btn {
     border-radius: .3rem;
     cursor: pointer;
 }
+select {
+    padding: .6rem 1.2rem;
+    border: none;
+    background: var(--bg-secondary);
+    font-weight: 600;
+    border-radius: .1rem;
+}
 
 .container {
     width: 100%;
@@ -252,4 +259,9 @@ a{
     color: var(--bg-accent);
     padding: .3rem;
     border-radius: 50%;
+}
+.fielter-section{
+    display: flex;
+    gap: .3rem;
+    align-items: center;
 }
