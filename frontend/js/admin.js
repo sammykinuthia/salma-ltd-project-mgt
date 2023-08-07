@@ -1,4 +1,4 @@
-import { getCurrentUser, useFetchGet,url,useFetchPost} from "./auth/utilities.js";
+import { getCurrentUser, useFetchGet,url,useFetchPost,useFetchDel} from "./auth/utilities.js";
 import { formatDate } from "./global.js";
 
 console.log(window.location.href)
@@ -18,7 +18,7 @@ if(!currentUser){
 // document.getElementById("username").textContent = currentUser.username
 
 
-if(path == "/admin/"){
+if(path == "/admin/" || path == "/admin/index.html"){
 const fetchProjects = async ()=>{
    
     const [resp,status]= await(useFetchGet(`${url}projects`));
@@ -31,10 +31,13 @@ const fetchProjects = async ()=>{
  
     if(status == 200){
         projects.forEach((project)=>{
+            const maxLength = 12;
+            const description = project.description.length > maxLength ? project.description.slice(0, maxLength) + "..." : project.description;
+
             html+=`
             <div class="project-card" id="${project.id}">
                 <h3 class="project-title">${project.name}</h3>
-                <p class="project-desc">${project.description.slice(0,13)}</p>
+                <p class="project-desc">${description}</p>
                 <div class="project-completion">To be Completed by <span id="completion-date">${formatDate(project.end_date)}</span> </div>
                 <div class="status-icon"></div>
             </div>
@@ -77,9 +80,9 @@ fetchProjects();
 
 
 if(path == "/admin/project.html"){
-    
+    const id = localStorage.getItem("projId");
     const projectDetails = async()=>{
-        const id = localStorage.getItem("projId");
+
         const [resp,status]= await(useFetchGet(`${url}projects/${id}`));
         const project = resp['project'][0];
         if(status == 200){
@@ -124,9 +127,21 @@ if(path == "/admin/project.html"){
             list.innerHTML = "Error Fetching Users";
            
         } 
+
+
     
 }
+const deletebtn = document.querySelector(".delete-btn");
+deletebtn.addEventListener("click",async()=>{
+    const [response, status] = await(useFetchDel(`${url}projects/${id}`));
+    if(status == 200){
+        window.location.href = "./"
+    }
+    else{
+        alert("error deleting")
+    }
 
+})
 
 projectDetails();
 }

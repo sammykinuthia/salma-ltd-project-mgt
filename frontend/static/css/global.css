@@ -272,3 +272,7 @@ a{
     }
     
 } */
+#error{
+    color: var(--bg-danger);
+}
+
