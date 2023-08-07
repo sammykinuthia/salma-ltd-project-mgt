@@ -1,4 +1,4 @@
-use SalmaConstructions;
+use Salma;
 GO
 
 CREATE TABLE users
@@ -30,6 +30,7 @@ CREATE TABLE verificationToken(
 
 
 
+
 -- ALTER TABLE users
 -- ADD is_sent BIT DEFAULT 0
--- select * from users
+select * from verificationToken

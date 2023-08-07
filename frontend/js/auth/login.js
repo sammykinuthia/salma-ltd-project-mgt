@@ -12,7 +12,9 @@ loginForm.addEventListener("submit",async e=>{
      console.log(resp)
     if(status == 200){
         localStorage.setItem("token", resp.data.token)
-        console.log(resp);
+        sessionStorage.setItem("currentUser", JSON.stringify(resp.data.user))
+
+        // console.log(resp.user.is_admin);
         if(resp.data.user.is_admin){
             setInterval( window.location.replace("../admin/"),4000)
         }

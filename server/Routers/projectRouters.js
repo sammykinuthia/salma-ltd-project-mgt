@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProjects, createProject,getProject,getUserProject,getUserProjectsHistory, deleteProject, assignProject, getAssignedProject} from "../Controllers/projectControllers.js";
+import { getProjects, createProject,getProject,getUserProject,getUserProjectsHistory, deleteProject, assignProject, getAssignedProject,getUsersForAproject} from "../Controllers/projectControllers.js";
 import { validateUser } from "../Middleware/userValidation.js";
 
 
@@ -12,4 +12,5 @@ projectRouter.get('/user/',validateUser, getUserProject)
 projectRouter.get('/user/hist/',validateUser, getUserProjectsHistory)
 projectRouter.post('/assign', validateUser, assignProject)
 projectRouter.post('/getAssigned', validateUser, getAssignedProject)
-
+projectRouter.get('/:id/users',validateUser,getUsersForAproject)
+projectRouter.delete('/:id',validateUser,deleteProject)

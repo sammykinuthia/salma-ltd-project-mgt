@@ -1,6 +1,6 @@
 -- CREATE DATABASE SalmaConstructions;
 -- GO
-USE SalmaConstructions;
+USE Salma;
 GO
 
 CREATE  TABLE project(
@@ -10,7 +10,9 @@ CREATE  TABLE project(
     created_at DATE NOT NULL DEFAULT GETDATE(),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    completed_on DATE
+    completed_on DATE,
+    is_completed BIT DEFAULT 0,
+    is_send BIT DEFAULT 0
 );
 GO
 

@@ -6,6 +6,7 @@ import { DB } from "../DatabaseHelpers/index.js"
 
 export const getProjects = async (req, res) => {
     const pool = await mssql.connect(sqlConfig)
+
     if (!req.info.is_admin) {
         return res.status(401).json(
             {
@@ -22,8 +23,8 @@ export const getProjects = async (req, res) => {
             }
             else {
                 if (records.recordset.length == 0)
-                    return res.json({ "message": "no projects" })
-                return res.json({ "data": records.recordset })
+                    return res.status(404).json({ "message": "no projects" })
+                return res.status(200).json({ "data": records.recordset })
 
             }
         })
@@ -268,6 +269,43 @@ export const getUserProjectsHistory = async (req, res) => {
     }
 }
 
-export const assignUserProject = async (req, res) => {
-    console.log("assign user");
+
+export const getUsersForAproject = async (req, res) => {
+
+    try {
+        const id = req.info.id;
+
+        const resp = await DB.exec('uspGetUsersAssignedToAProject', { id })
+        if (resp.recordset.length == 0) {
+            return res.status(404).json(
+                {
+                    status: "error",
+                    message: "No Users Assigned Currently"
+                }
+            )
+
+        }
+        else {
+            return res.status(200).json(
+                {
+                    status: "success",
+                    users: users.recordset
+                }
+            )
+
+        }
+    } catch (error) {
+        return res.status(500).json(
+            {
+                status: "error",
+                message: "Error fetching users"
+            }
+        )
+
+
+
+}
+
+
+    
 }

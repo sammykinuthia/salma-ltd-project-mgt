@@ -1,4 +1,4 @@
-use SalmaConstructions;
+use Salma;
 go
 
 CREATE OR ALTER PROC uspGetUnSendVCodeUsers AS 
@@ -44,3 +44,34 @@ BEGIN
     WHERE project_id = @project_id AND user_id = @user_id
 END;
 GO
+-- project completion
+
+CREATE OR ALTER PROC uspCompletedProjectEmail AS 
+BEGIN
+    SELECT  p.id, p.name project, p.start_date startDate, p.end_date endDate FROM projectUser pu
+    FULL OUTER JOIN project p ON pu.project_id  = p.id
+    WHERE p.is_completed = 1 AND p.is_send = 0
+END;
+GO
+
+CREATE OR ALTER  PROC uspSetSentEmail (@id VARCHAR(200)) AS
+BEGIN
+UPDATE project
+SET is_send=1
+END;
+GO
+
+-- SELECT * FROM projectUser
+
+-- UPDATE projectUser
+-- SET is_sent = 0
+
+-- SELECT * FROM proje
+
+-- CREATE OR ALTER PROC uspProjectIsComplete(@user)
+
+-- UPDATE users
+-- SET is_admin=1
+-- WHERE username='admin'
+
+

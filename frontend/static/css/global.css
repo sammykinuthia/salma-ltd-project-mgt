@@ -24,7 +24,7 @@ body {
     min-height: 100dvh;
 }
 
-button, .btn {
+button,.button ,.btn{
     padding: .6rem 1.4rem;
     border: none;
     outline: none;
@@ -264,4 +264,10 @@ a{
     display: flex;
     gap: .3rem;
     align-items: center;
+
+@media screen and (max-width:676px){
+    aside{
+        display: none;
+    }
+    
 }

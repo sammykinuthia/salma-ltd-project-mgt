@@ -38,7 +38,7 @@ GO
 CREATE OR ALTER PROC uspGetProjectUserById( @project_id VARCHAR(200),@user_id VARCHAR(200))
 AS
 BEGIN
-    SELECT u.id user_id, u.username, u.email, p.name, p.id project_id,p  FROM projectUser pu
+    SELECT u.id user_id, u.username, u.email, p.name, p.id project_id FROM projectUser pu
     FULL OUTER JOIN users u
     ON user_id = u.id
     FULL OUTER JOIN project p
@@ -56,7 +56,7 @@ END;
 GO
 
 
--- SELECT * FROM projectUser
+-- SELECT * FROM users
 
 
 
@@ -108,4 +108,13 @@ BEGIN
     ORDER BY 
         uph.assigned_at DESC;
 END;
+GO
 
+CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject @id VARCHAR(200)
+AS
+	BEGIN
+		SELECT u.id, u.full_name, u.username, u.email
+		FROM users u
+		JOIN projectUser pu ON u.id = pu.user_id
+		WHERE pu.project_id = @id;
+	END;
