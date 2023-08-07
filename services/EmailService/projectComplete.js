@@ -5,25 +5,25 @@ import { sqlConfig } from '../Config/dbConfig.js'
 import { sendMail } from '../Helpers/email.js'
 dotenv.config()
 
-export const VerifyUser = async () => {
+export const projectComplete = async () => {
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
-        const users = await (await pool.request().execute("uspGetUnverifiedUsers")).recordset
-        for (let user of users) {
-            ejs.renderFile('./Templates/projectComplete.ejs', { username: user.username, code: user.code }, async (error, html) => {
+        const projects = await (await pool.request().execute("uspCompletedProjectEmail")).recordset
+        for (let proj of projects) {
+            ejs.renderFile('./Templates/projectComplete.ejs', { project: proj.project, startDate:proj.startDate, endDate:proj.endDate }, async (error, html) => {
                 if (error) {
                     console.log(error);
                     return;
                 }
                 const message = {
                     from: process.env.EMAIL,
-                    to: user.email,
-                    subject: "Verification code",
+                    to: process.env.EMAIL,
+                    subject: "Project Complete",
                     html
                 }
                 try {
                     await sendMail(message)
-                    await pool.request().input("id", user.id).execute("uspVerifyUser")
+                    await pool.request().input("id", proj.id).execute("uspSetSentEmail")
 
                 } catch (error) {
                     console.log(error);

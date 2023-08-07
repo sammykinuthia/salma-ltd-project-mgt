@@ -1,4 +1,4 @@
-import { sqlConfig } from "../Config/config.js";
+import { sqlConfig } from "../../server/Config/config.js";
 
 import mssql from 'mssql'
 

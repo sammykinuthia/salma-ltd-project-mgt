@@ -1,72 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/css/global.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./static/css/global.css" />
     <title>Salma Limited</title>
+        <!-- font-awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      />
 
     <style>
-        .container{
-            background-image: url("./static/images/pexels-alena-darmel-7706930.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 80vh;
-            display: grid;
-            place-items: center;
-            align-items: center;
-        }
-        .main{
-            color:  var(--text-secondary);
-            text-align: center;
-        }
-        .dashboard-user, .dashboard-admin{
-             display: none;
-        }
-        .nav{
-            height: 5%;
-        }
+      *{
+        box-sizing: border-box;
+      }
+    body{
+        overflow-x: none;
+    }
+      .container {
+        background-image: url("./static/images/pexels-alena-darmel-7706930.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top;
+        width: 100vw;
+        height: 80vh;
+        display: grid;
+        place-items: center;
+        align-items: center;
+        overflow-x: hidden;
+      
+      }
+      .main {
+        color: var(--text-secondary);
+        text-align: center;
+      }
+      .dashboard-user,
+      .dashboard-admin {
+        display: none;
+      }
+      .nav {
+        height: 5%;
+      }
 
+      .about {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-direction: row;
+        /* width:80%; */
+        padding: 1rem 4rem;
+      }
+
+      .about_us_Img {
+        width: 50%;
+      }
+      .aboutus {
+        width: 50%;
+      }
+      .aboutus h2 {
+        font-size: 30px;
+        padding: 20px;
+      }
+      .aboutus p{
+        font-size: 20px;
+      }
+
+      /* reviews */
+
+      /*
+=============== 
+Fonts
+===============
+*/
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap");
+
+/*
+=============== 
+Variables
+===============
+*/
+
+:root {
+  /* dark shades of primary color*/
+  --clr-primary-1: hsl(205, 86%, 17%);
+  --clr-primary-2: hsl(205, 77%, 27%);
+  --clr-primary-3: hsl(205, 72%, 37%);
+  --clr-primary-4: hsl(205, 63%, 48%);
+  /* primary/main color */
+  --clr-primary-5: hsl(205, 78%, 60%);
+  /* lighter shades of primary color */
+  --clr-primary-6: hsl(205, 89%, 70%);
+  --clr-primary-7: hsl(205, 90%, 76%);
+  --clr-primary-8: hsl(205, 86%, 81%);
+  --clr-primary-9: hsl(205, 90%, 88%);
+  --clr-primary-10: hsl(205, 100%, 96%);
+  /* darkest grey - used for headings */
+  --clr-grey-1: hsl(209, 61%, 16%);
+  --clr-grey-2: hsl(211, 39%, 23%);
+  --clr-grey-3: hsl(209, 34%, 30%);
+  --clr-grey-4: hsl(209, 28%, 39%);
+  /* grey used for paragraphs */
+  --clr-grey-5: hsl(210, 22%, 49%);
+  --clr-grey-6: hsl(209, 23%, 60%);
+  --clr-grey-7: hsl(211, 27%, 70%);
+  --clr-grey-8: hsl(210, 31%, 80%);
+  --clr-grey-9: hsl(212, 33%, 89%);
+  --clr-grey-10: hsl(210, 36%, 96%);
+  --clr-white: #fff;
+  --clr-red-dark: hsl(360, 67%, 44%);
+  --clr-red-light: hsl(360, 71%, 66%);
+  --clr-green-dark: hsl(125, 67%, 44%);
+  --clr-green-light: hsl(125, 71%, 66%);
+  --clr-black: #222;
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Open Sans", sans-serif;
+  --transition: all 0.3s linear;
+  --spacing: 0.1rem;
+  --radius: 0.25rem;
+  --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  /* --max-width: 1170px; */
+  --fixed-width: 620px;
+}
+/*
+=============== 
+Global Styles
+===============
+*/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* body {
+  font-family: var(--ff-secondary);
+  background: var(--clr-grey-10);
+  color: var(--clr-grey-1);
+  line-height: 1.5;
+  font-size: 0.875rem;
+} */
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  font-family: var(--ff-primary);
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 0.875rem;
+}
+p {
+  margin-bottom: 1.25rem;
+  color: var(--clr-grey-5);
+}
+@media screen and (min-width: 800px) {
+  h1 {
+    font-size: 4rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1rem;
+  }
+  body {
+    font-size: 1rem;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1;
+  }
+}
+/*  global classes */
+
+/* section */
+.section {
+  padding: 5rem 0;
+}
+
+/* .section-center {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 1170px;
+} */
+@media screen and (min-width: 992px) {
+  .section-center {
+    width: 95vw;
+  }
+}
+
+
+.title {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.underline {
+  height: 0.25rem;
+  width: 5rem;
+  background: var(--clr-primary-5);
+  margin-left: auto;
+  margin-right: auto;
+}
+.container_review {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  /* width: 80vw; */
+  /* max-width: var(--fixed-width); */
+}
+.review {
+  background: var(--clr-white);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
+  transition: var(--transition);
+  text-align: center;
+  width: 70rem;
+}
+.review:hover {
+  box-shadow: var(--dark-shadow);
+}
+.img-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+}
+#person-img {
+  width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+}
+.img-container::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f10e";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transform: translateY(25%);
+  background: var(--clr-primary-5);
+  color: var(--clr-white);
+}
+.img-container::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--clr-primary-5);
+  position: absolute;
+  top: -0.25rem;
+  right: -0.5rem;
+  border-radius: 50%;
+}
+#author {
+  margin-bottom: 0.25rem;
+}
+#job {
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  color: var(--clr-primary-5);
+  font-size: 0.85rem;
+}
+#info {
+  margin-bottom: 0.75rem;
+}
+.prev-btn,
+.next-btn {
+  color: var(--clr-primary-7);
+  font-size: 1.25rem;
+  background: transparent;
+  border-color: transparent;
+  margin: 0 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.prev-btn:hover,
+.next-btn:hover {
+  color: var(--clr-primary-5);
+}
+
+      
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="nav">
+      <p>Salma Limited</p>
+
+      <div class="buttons">
+        <a class="button" href="./auth/login.html">Sign In</a>
+        <a
+          class="button"
+          style="
+            background-color: var(--bg-white);
+            border: var(--bg-accent) 1px solid;
+          "
+          href="./auth/register.html"
+          >Sign Up</a
+        >
+      </div>
+      <div class="dashboard-user">
+        <a class="button" href="./user/index.html">Dashboard</a>
+      </div>
+      <div class="dashboard-admin">
+        <a class="button" href="./admin/index.html">Dashboard</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="main">
+        <h1>Salma Limited</h1>
+        <p>Your business partner</p>
+      </div>
+    </div>
+    <div class="about">
+      <span class="aboutus">
+        <h2>Effective Project Management</h2>
         <p>
-            Salma Limited
+          Manage projects with either small or large teams using the most
+          appropriate Project Management techniques with <b>Salma limited</b>.
+          Transform Chaotic Ideas into Choreographed Success, Where Innovation Meets Implementation. 
+          Elevate Your Project Game and Watch Your Visions Flourish!
+
+          "Create, Collaborate, Succeed"
         </p>
 
         <div class="buttons">
-            <a class="button" href="./auth/login.html">Sign In</a>
-            <a class="button" style="background-color: var(--bg-white); border: var(--bg-accent) 1px solid;" href="./auth/register.html">Sign Up</a>
-            
-        </div>
-        <div class="dashboard-user">
-            <a class="button" href="./user/index.html">Dashboard</a>
-        </div>
-        <div class="dashboard-admin">
-            <a class="button" href="./admin/index.html">Dashboard</a>
+          <a class="button" href="./auth/login.html">Sign In</a>
+          <a
+            class="button"
+            style="
+              background-color: var(--bg-white);
+              border: var(--bg-accent) 1px solid;
+            "
+            href="./auth/register.html"
+            >Sign Up</a
+          >
         </div>
 
+      </span>
+      <span class="about_us_Img">
+        <img src="./static/images/working.png" alt="working" />
+      </span>
     </div>
-    <div class="container">
-    
-       <div class="main">
-        <h1>Salma Limited</h1>
+
+    <div class="about">
+      <span class="about_us_Img">
+        <img src="./static/images/working2.png" alt="working" />
+      </span>
+      <span class="aboutus">
+        <h2>
+            Collaborating made easier
+        </h2>
         <p>
-            Your business partner
+          A project is complete when it starts working for you, Rather than you working on it
+
+          Empower Your Projects with Precision Planning and Flawless Execution. Unlock a World of Possibilities and Lead Your Team to Victory with Our Intuitive App.
         </p>
-       </div>
+      </span>
     </div>
 
-    <section>
-        <h2>About Us</h2>
-    </section>
+    <div class="about">
+        <span class="aboutus">
+          <h2>Beat the system</h2>
+          <p>
+            Navigate the Project Jungle Like a Pro: Where Tasks Align and Goals Shine Bright.
+             Embrace the Future of Project Management and Forge Your Path to Excellence.
+          </p>
+        </span>
+        <span class="about_us_Img">
+          <img src="./static/images/working3.png" alt="working" />
+        </span>
+      </div>
+  
 
-    <section>
-        <h2> How It Works</h2>
-    </section>
+      <!-- <main> -->
+        <section class="container_review">
+          <!-- title -->
+          <div class="title">
+            <h2>our reviews</h2>
+            <div class="underline"></div>
+          </div>
+          <!-- review -->
+          <article class="review">
+            <div class="img-container">
+              <img src="person-1.jpeg" id="person-img" alt="" />
+            </div>
+            <h4 id="author"></h4>
+            <p id="job">ux designer</p>
+            <p id="info">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto
+              asperiores debitis incidunt, eius earum ipsam cupiditate libero?
+              Iste, doloremque nihil?
+            </p>
+            <!-- prev next buttons-->
+            <div class="button-container">
+              <button class="prev-btn">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="next-btn">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+          </article>
+        </section>
+      <!-- </main> -->
 
     <script type="module" src="./js/auth/checklogin.js"></script>
-</body>
+    <script type="module" src="./index.js"></script>
+  </body>
 </html>
