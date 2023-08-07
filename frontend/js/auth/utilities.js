@@ -12,6 +12,7 @@ export async function useFetchPost(url, data) {
 
 }
 
+
 export async function useFetchGet(url) {
     const response = await fetch(url, { headers: { "Content-Type": "application/json", token } })
     return await response.json()
@@ -38,3 +39,5 @@ export function getCurrentUser() {
     }
 
 }
+
+export const url = "http://localhost:3000/"
