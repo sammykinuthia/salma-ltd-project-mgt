@@ -55,10 +55,20 @@ BEGIN
 END;
 GO
 
+CREATE OR ALTER PROC uspGetProjectByUserId (@user_id VARCHAR(200)) AS
+BEGIN
+    SELECT p.id, p.end_date, p.name title,p.start_date, u.full_name FROM projectUser pu
+    FULL OUTER JOIN project p ON pu.project_id = p.id
+    FULL OUTER JOIN users u ON pu.user_id = u.id
+    WHERE u.id=@user_id AND p.completed_on IS NULL
+END;
+GO
 
--- SELECT * FROM users
+-- SELECT * FROM project
 
-
+-- UPDATE project
+-- SET completed_on ='2023-02-02'
+-- WHERE id='1cd7393b-a93a-4971-9734-212656431610'
 
 CREATE OR ALTER PROCEDURE uspGetCurrentUserProject(
     @user_id VARCHAR(200))

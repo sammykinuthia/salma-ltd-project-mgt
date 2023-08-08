@@ -264,6 +264,7 @@ a{
     display: flex;
     gap: .3rem;
     align-items: center;
+}
 
 @media screen and (max-width:676px){
     aside{
