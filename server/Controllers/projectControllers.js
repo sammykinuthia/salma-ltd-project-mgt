@@ -335,6 +335,7 @@ export const getUsersForAproject = async (req, res) => {
         const id = req.params.id;
 
         const resp = await DB.exec('uspGetUsersAssignedToAProject', { id })
+        console.log(resp)
         if (resp.recordset.length == 0) {
             return res.status(404).json(
                 {
