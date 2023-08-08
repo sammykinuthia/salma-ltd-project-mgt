@@ -8,8 +8,12 @@ export const projectRouter = Router()
 projectRouter.get('/',validateUser,getProjects)
 projectRouter.post('/',validateUser,createProject)
 projectRouter.get('/:id',validateUser,getProject)
+
 // projectRouter.get('/:id',validateUser,getProjectByUserId)
 projectRouter.post('/users',validateUser,getUsersForProject)
+
+projectRouter.get('/:id',validateUser,getProjectByUserId)
+
 projectRouter.get('/user/',validateUser, getUserProject)
 projectRouter.get('/user/hist/',validateUser, getUserProjectsHistory)
 projectRouter.post('/assign', validateUser, assignProject)
