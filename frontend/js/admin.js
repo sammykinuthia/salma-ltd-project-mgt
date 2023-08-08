@@ -84,7 +84,8 @@ if(path == "/admin/project.html"){
     const projectDetails = async()=>{
 
         const [resp,status]= await(useFetchGet(`${url}projects/${id}`));
-        const project = resp['project'][0];
+        const project = resp['project'];
+        console.log(resp)
         if(status == 200){
             document.querySelector(".project-desc").innerHTML = project.description;
             document.querySelector("#completion-date").innerHTML = formatDate(project.end_date);
