@@ -8,6 +8,7 @@ dotenv.config()
 export const VerifyUser = async () => {
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
+        console.log("..")
         const users = await (await pool.request().execute("uspGetUnSendVCodeUsers")).recordset
         for (let user of users) {
             ejs.renderFile('./Templates/verificationEmail.ejs', { username: user.username, code: user.code }, async (error, html) => {
