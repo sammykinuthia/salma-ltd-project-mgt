@@ -330,7 +330,7 @@ export const getUserProjectsHistory = async (req, res) => {
 export const getUsersForAproject = async (req, res) => {
 
     try {
-        const id = req.info.id;
+        const id = req.params.id;
 
         const resp = await DB.exec('uspGetUsersAssignedToAProject', { id })
         if (resp.recordset.length == 0) {
