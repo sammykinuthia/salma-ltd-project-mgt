@@ -16,11 +16,30 @@ document.getElementById("addproject").addEventListener("submit", async(e) => {
     console.log(data);
    const [res, code] = await useFetchPost("http://localhost:3000/projects", data)
    if(code == 200){
-    window.location.replace("./projects.html")
+    window.location.replace("./index.html")
    }
    else{
     document.getElementById('error').textContent = res.message
    }
-   console.log(res);
-   console.log(code);
+//    console.log(res);
+//    console.log(code);
 })
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const startDateInput = document.getElementById("start_date");
+    const endDateInput = document.getElementById("end_date");
+
+  
+    const today = new Date().toISOString().split("T")[0];
+    
+ 
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const tomorrow = tomorrowDate.toISOString().split("T")[0];
+
+    startDateInput.setAttribute("min", today);
+    endDateInput.setAttribute("min", tomorrow);
+ });
+

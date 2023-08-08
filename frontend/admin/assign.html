@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/global.css">
-    <title>Salma Ltd</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -33,46 +32,62 @@
                 <iconify-icon class="icon" icon="solar:logout-2-outline"></iconify-icon>
                 <h3 class="title">Logout</h3>
             </div>
+
         </aside>
         <main>
             <div class="nav">
-                <div class="title-main">Add Project</div>
-                <div class="action-section">
+                <div class="title-main"></div>
+            
+                <!-- <div class="action-section">
+                    <div class="fielter-section">
+                        <h4>Fielter By: </h4>
+                        <select name="" id="users-list-sort">
+                            <option value="all">All Users</option>
+                            <option value="verified">Verified</option>
+                            <option value="unverified">UnVerified</option>
+                        </select>
+                    </div>
                     <div class="profile-img">
                         <iconify-icon class="icon" icon="material-symbols:person"></iconify-icon>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="main-body">
-
-                <div class="modal hidden">
-                    <h3> Add A New Project</h3>
-                    <form  class="addproject"  id="addproject"  method="get">
-                        <h6 id="error"></h6>
-                        <label for="Title"> Title</label>
-                        <input type="text" id="proj_title" placeholder="Title" required /><br />
-
-                        <label for="Description"> Description</label>
-                        <textarea name="proj_description" id="proj_description" placeholder="Description"></textarea>
-
-                        <label for="Start Date"> Start Date</label>
-                        <input type="date" id="start_date" placeholder="Start Date" required /> <br />
-
-                        <label for="End Date"> End Date</label>
-                        <input type="date" id="end_date" placeholder="End Date" required /> <br />
-
-                        <button type="submit" id="Add"> Add Project </button>
-                    </form>
+            <div class="main-body user-main-body">
+                    <div class="users-header">
+                        <div class=""></div>
+                        <h4 class="full_name">Full Name</h4>
+                        <h4 class="email">Email</h4>
+                        <h4 class="project">Current Project</h4>
+                 
+                    </div>
+                <div id="users" class="users">
+                    <div class="user-card">
+                        <div class="user-select">
+                            <input type="checkbox" id="">
+                        </div>
+                        <div class="user-name-section">
+                            <h4 class="user-name">Sammy kigo</h4>
+                        </div>
+                        <div class="user-email-section">
+                            <p class="user-email">Sammykigo@gmail.com</p>
+                        </div>
+                        <div class="user-project-section">
+                            <p class="user-project">Dam construction</p>
+                        </div>
+                    </div>
+                   
                 </div>
-                <div class="overlay hidden"> </div>
+                <div class="user-action">
+                    <button id="assign">assign to project</button>
+                </div>
             </div>
         </main>
     </div>
     <!-- <script type="module" src="admin.js"></script> -->
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script type="module"  src="../js/addProject.js"></script>
     <script type="module" src="../js/global.js"></script>
     <script type="module" src="../js/admin.js"></script>
+
 </body>
 
 </html>

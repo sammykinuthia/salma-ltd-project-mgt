@@ -40,4 +40,10 @@ export function getCurrentUser() {
 
 }
 
+export async function useFetchDel(url) {
+    const response = await fetch(url, {method: "DELETE", headers: { "Content-Type": "application/json", token } })
+    return [await response.json(),response.status]
+
+}
+
 export const url = "http://localhost:3000/"

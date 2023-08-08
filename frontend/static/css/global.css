@@ -266,9 +266,9 @@ a{
     align-items: center;
 }
 
-@media screen and (max-width:676px){
-    aside{
-        display: none;
-    }
-    
+.project-card{cursor: pointer;}
+
+#error{
+    color: var(--bg-danger);
 }
+
