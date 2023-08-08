@@ -134,3 +134,20 @@ AS
     GO
 
     -- SELECT * FROM projectUser
+
+
+CREATE OR ALTER PROCEDURE uspGetUsersForProject( @project_id VARCHAR(200))
+AS
+	BEGIN
+        SELECT full_name, username, id from users
+        WHERE id IN ( SELECT user_id FROM projectUser
+            WHERE project_id != 'e0315e9c-dd32-4dd0-adbc-e8ff9edafdec') AND
+            id NOT IN (
+                SELECT user_id FROM projectUser 
+                INNER JOIN project p on project_id= p.id
+                WHERE p.completed_on IS NULL
+            )
+	END;
+    GO
+SELECT * from project
+-- DELETE FROM projectUser

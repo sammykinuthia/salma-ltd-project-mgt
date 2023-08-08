@@ -142,15 +142,17 @@ export const getProjectByUserId = async (req, res) => {
 
 export const assignProject = async (req, res) => {
     try {
-        const {users_id:users_id_str, project_id} = req.body
-        const users_id = users_id_str.slice(1, -1).split(",");
-        console.log(Array.isArray(users_id));
+        const {users_id, project_id} = req.body
+        // const users_id = users_id_str.slice(1, -1).split(",");
+        // console.log(Array.isArray(users_id));
+        // console.log(users_id);
+
         const pool = await mssql.connect(sqlConfig)
  
         if (pool.connected) {
             for(let user_id of users_id) {
-                console.log(user_id);
-                pool.request()
+                // console.log(user_id);
+               await pool.request()
                     .input("project_id", project_id)
                     .input("user_id", user_id)
                     .execute("uspSetProjectUser", (error, records) => {
@@ -246,6 +248,37 @@ export const getAssignedProject = async (req, res) => {
         res.json({error:error.message})
     }
 }
+
+export const getUsersForProject = async (req, res) => {
+    try {
+        const { project_id } = req.body
+        const pool = await mssql.connect(sqlConfig)
+        if (pool.connected) {
+            pool.request()
+                .input("project_id", project_id)
+                .execute("uspGetUsersForProject", (error, records) => {
+                    if (error) {
+                        console.log(error);
+                        res.json({ error })
+                    }
+                    else {
+                        console.log(records.recordset);
+                        res.json({ "users": records.recordset })
+                    }
+                })
+        }
+        else {
+            res.json({ Error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.json({error:error.message})
+    }
+}
+
+
+
 export const getUserProject = async (req, res) => {
     try {
         const user_id = req.info.id;
