@@ -1,5 +1,5 @@
 import { getCurrentUser, useFetchGet, useFetchPost } from "./auth/utilities.js"
-
+import { formatDate } from "./global.js";
 
 const mainBody = document.getElementById("main-body")
 renderProject()
@@ -14,10 +14,12 @@ async function renderProject(){
 
        
         console.log(res);
-        document.querySelector(".project-title").innerHTML = res.data.name
+        document.querySelector(".project-title").innerHTML = res.data[0].title
+        document.querySelector(".project-content").innerHTML = `Expected Completion: ${formatDate(res.data[0].end_date)}`;
         }
         else if(code == 404){
             document.querySelector(".project-title").innerHTML = "No Assigned Project At the Moment";
+            
         }
 
     } catch (error) {

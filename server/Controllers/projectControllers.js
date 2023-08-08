@@ -115,7 +115,9 @@ export const getProjectByUserId = async (req, res) => {
                     else {
                         if (records.recordset.length == 0)
                             return res.status(404).json({ "message": "not projects" })
+                       
                         return res.status(200).json({ "data": records.recordset })
+
 
                     }
                 })
