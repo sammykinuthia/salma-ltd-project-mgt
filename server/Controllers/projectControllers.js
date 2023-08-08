@@ -115,14 +115,14 @@ export const getProjectByUserId = async (req, res) => {
                     }
                     else {
                         if (records.recordset.length == 0)
-                            return res.json({ "message": "not projects" })
+                            return res.status(404).json({ "message": "not projects" })
                         return res.status(200).json({ "data": records.recordset })
 
                     }
                 })
         }
         else {
-            return res.json({ Error: "error connecting to db" })
+            return res.status(500).json({ Error: "error connecting to db" })
         }
 
     } catch (error) {
@@ -319,7 +319,7 @@ export const getUserProjectsHistory = async (req, res) => {
 export const getUsersForAproject = async (req, res) => {
 
     try {
-        const id = req.info.id;
+        const id = req.params.id;
 
         const resp = await DB.exec('uspGetUsersAssignedToAProject', { id })
         if (resp.recordset.length == 0) {
@@ -335,12 +335,13 @@ export const getUsersForAproject = async (req, res) => {
             return res.status(200).json(
                 {
                     status: "success",
-                    users: users.recordset
+                    users: resp.recordset
                 }
             )
 
         }
     } catch (error) {
+        console.log(error)
         return res.status(500).json(
             {
                 status: "error",

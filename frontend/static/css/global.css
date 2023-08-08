@@ -72,6 +72,8 @@ select {
     flex-wrap: wrap;
     width: 100%;
     justify-content: start;
+    max-height: 30rem;
+    overflow-y: scroll;
 
     
 
