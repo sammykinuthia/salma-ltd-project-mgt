@@ -161,18 +161,39 @@ if(path == "/admin/assign.html"){
             document.querySelector(".title-main").innerHTML = localStorage.getItem("projectName")?? "Projrct"
             users_.forEach((user) => {
                 
-              html += `
-              <div class="user-select">
-                <input type="checkbox" id="${user.id}">
-              </div>
-              <div class="user-name-section">
-                <h4 class="user-name">${user.full_name}</h4>
-              </div>
-              <div class="user-email-section">
-                <p class="user-email">${user.email}</p>
-              </div>
+            //   html += `
+            //   <div class="user-card">
+            //     <div class="user-select">
+            //         <input type="checkbox" id="${user.id}">
+            //     </div>
+            //     <div class="user-name-section">
+            //         <h4 class="user-name">${user.full_name}</h4>
+            //     </div>
+            //     <div class="user-email-section">
+            //         <p class="user-email">${user.email}</p>
+            //     </div>
+            //     <div class="user-email-section">
+            //     <p class="user-email">${user.email}</p>
+            // </div>
+            //   </div>
             
-            `;
+            // `;
+            html += `
+            <div class="user-card">
+                <div class="user-select">
+                    <input type="checkbox" id="${user.id}">
+                </div>
+                <div class="user-name-section">
+                    <h4 class="user-name">${user.full_name}</h4>
+                </div>
+                <div class="user-email-section">
+                    <p class="user-email">${user.email}</p>
+                </div>
+                <div class="user-project-section">
+
+                </div>
+            </div>
+            `
             });
     
             container.innerHTML = html;

@@ -55,6 +55,8 @@ BEGIN
 END;
 GO
 
+
+
 CREATE OR ALTER PROC uspGetProjectByUserId (@user_id VARCHAR(200)) AS
 BEGIN
     SELECT p.id, p.end_date, p.name title,p.start_date, u.full_name FROM projectUser pu
