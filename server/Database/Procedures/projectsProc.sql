@@ -50,8 +50,9 @@ GO
 
 CREATE OR ALTER PROC uspSetProjectUser ( @project_id VARCHAR(200),@user_id VARCHAR(200)) AS
 BEGIN
-    INSERT INTO projectUser(project_id, user_id) VALUES
-    (@project_id, @user_id)
+    INSERT INTO projectUser(project_id, user_id)
+    VALUES   (@project_id, @user_id);
+    SELECT * FROM projectUser WHERE user_id=@user_id AND project_id=@project_id
 END;
 GO
 
@@ -66,7 +67,7 @@ BEGIN
 END;
 GO
 
--- SELECT * FROM project
+SELECT * FROM projectUser
 
 -- UPDATE project
 -- SET completed_on ='2023-02-02'
@@ -130,3 +131,6 @@ AS
 		JOIN projectUser pu ON u.id = pu.user_id
 		WHERE pu.project_id = @id;
 	END;
+    GO
+
+    -- SELECT * FROM projectUser
