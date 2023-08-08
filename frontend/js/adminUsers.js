@@ -7,17 +7,19 @@ renderUsers()
 usersFielter.addEventListener("change", e => {
     renderUsers(usersFielter.value)
 })
-function renderUsers(fielter = 'all') {
-    useFetchGet("http://localhost:3000/users").then(r => {
-        let users = r.users
+async function renderUsers(fielter = 'all') {
+    try {
+        const [res, code] = await useFetchGet("http://localhost:3000/users")
+        let users = res.users
+        console.log(res.users);
         if (fielter == "unverified") {
             users = users.filter(user => !user.is_verified)
         }
         else if (fielter == "verified") {
-            users = users.filter(user => user.is_verified )
+            users = users.filter(user => user.is_verified)
         }
-    
-        console.log(users);
+
+        // console.log(r[0]);
         let usersList = ""
         for (let user of users) {
             // console.log(user);
@@ -41,7 +43,7 @@ function renderUsers(fielter = 'all') {
                 </div>`
         }
         usersSection.innerHTML = usersList
-    })
-
+    } catch (error) {
+        console.log(error);
+    }
 }
-
