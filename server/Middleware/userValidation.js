@@ -11,7 +11,6 @@ export const validateUser = async (req, res, next) => {
 
         const decordedData = jwt.verify(token, process.env.SECRET)
         req.info = decordedData
-        console.log(decordedData);
         
     } 
     catch (error) {

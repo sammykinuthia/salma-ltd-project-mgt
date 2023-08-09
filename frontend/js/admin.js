@@ -31,22 +31,18 @@ if (path == "/admin/" || path == "/admin/index.html") {
 
         if (status == 200) {
             projects.forEach((project) => {
-                const maxLength = 12;
+                const maxLength = 20;
                 const description = project.description.length > maxLength ? project.description.slice(0, maxLength) + "..." : project.description;
 
                 html += `
-            <div class="project-card" id="${project.id}">
-                <h3 class="project-title">${project.name}</h3>
-                <p class="project-desc">${description}</p>
-                <div class="project-completion">To be Completed by <span id="completion-date">${formatDate(project.end_date)}</span> </div>
-                <div class="status-icon"></div>
-            </div>
-            `
-
+                        <div class="project-card" id="${project.id}">
+                            <h3 class="project-title">${project.name}</h3>
+                            <p class="project-desc">${description}</p>
+                            <div class="project-completion">To be Completed by <span id="completion-date">${formatDate(project.end_date)}</span> </div>
+                            <div class="status-icon"></div>
+                        </div>
+                        `
             });
-
-
-
 
         }
         else if (status == 404) {
@@ -81,53 +77,51 @@ if (path == "/admin/" || path == "/admin/index.html") {
 
 if (path == "/admin/project.html") {
     const id = localStorage.getItem("projId");
+    console.log(id);
     const projectDetails = async () => {
-
-
-        const [resp,status]= await(useFetchGet(`${url}projects/${id}`));
-        const project = resp['project'];
-        console.log(resp)
-        if(status == 200){
-
+        const [resp, status] = await (useFetchGet(`${url}projects/${id}`));
+        const project = resp.project[0];
+        console.log(project[0])
+        if (status == 200) {
             document.querySelector(".project-desc").innerHTML = project.description;
             document.querySelector("#completion-date").innerHTML = formatDate(project.end_date);
             document.querySelector(".title-main").innerHTML = project.name;
             localStorage.setItem("projectName", project.name);
-
         }
         else {
             document.querySelector(".project-desc").innerHTML = "Error";
             document.querySelector("#completion-date").innerHTML = "Error";
-
-
-
         }
-
 
         const [response, status_] = await (useFetchGet(`${url}projects/${id}/users`));
         const users = response['users']
         const list = document.querySelector(".list-users");
+        console.log(users);
 
 
 
         if (status_ == 200) {
+            let usersList = ''
             users.forEach((user) => {
                 const listItem = document.createElement("li");
-                listItem.textContent = `${user.full_name} ${user.email}`;
-
-                list.appendChild(listItem);
-
+                listItem.textContent = `${user.username}`;
+                let userItem = `<li>
+                                <iconify-icon class="icon" icon="material-symbols:person"></iconify-icon>
+                                <p>${user.username}</p>
+                                </li>
+                                `
+                usersList +=(userItem);
             });
-
+            list.innerHTML = usersList
 
         }
         else if (status_ == 404) {
 
-            list.innerHTML = "No Users Assigned";
+            list.innerHTML = "<li>No Users Assigned</li>";
 
         }
         else {
-            list.innerHTML = "Error Fetching Users";
+            list.innerHTML = "<li>Error Fetching Users</li>";
 
         }
 
@@ -154,35 +148,54 @@ if (path == "/admin/assign.html") {
     const id = localStorage.getItem("projId");
 
     const fetchUsers = async () => {
-        const id = localStorage.getItem("projId");
-        const [resp, status] = await useFetchPost(`${url}projects/users`, { project_id: id });
+        const [resp, status] = await useFetchPost(`${url}projects/projectUsers`);
         const users_ = resp.users;
+        console.log(resp);
         // const users_ = users.filter(user => user.projects == null && user.is_verified && !user.is_admin);
         let html = "";
         const container = document.getElementById("users")
         if (status == 200) {
-            document.querySelector(".title-main").innerHTML = localStorage.getItem("projectName") ?? "Projrct"
+            document.querySelector(".title-main").innerHTML = localStorage.getItem("projectName") ?? "Project"
+           if(users_.length > 0){
             users_.forEach((user) => {
                 html += `
-            <div class="user-card">
-                <div class="user-select">
-                    <input type="checkbox" id="${user.id}">
-                </div>
-                <div class="user-name-section">
-                    <h4 class="user-name">${user.full_name}</h4>
-                </div>
-                <div class="user-email-section">
-                    <p class="user-email">${user.email}</p>
-                </div>
-                <div class="user-project-section">
+                        <div class="user-card">
+                            <div class="user-select">
+                                <input type="checkbox" id="${user.id}">
+                            </div>
+                            <div class="user-name-section">
+                                <h4 class="user-name">${user.full_name}</h4>
+                            </div>
+                            <div class="user-email-section">
+                                <p class="user-email">${user.email}</p>
+                            </div>
+                            <div class="user-project-section">
 
-                </div>
-            </div>
-            `
+                            </div>
+                        </div>
+                        `
             });
+        }
+            else{
+       
+            html += `
+                    <div class="user-card">
+                        <div class="user-select">
+                        </div>
+                        <div class="user-name-section">
+                            <h4 class="user-name">${"No User"}</h4>
+                        </div>
+                        <div class="user-email-section">
+                            <p class="user-email">${"No User"}</p>
+                        </div>
+                        <div class="user-project-section">
 
+                        </div>
+                    </div>
+                    `
+            }
+           
             container.innerHTML = html;
-
         }
         else if (status == 404 || users_.length == 0) {
             container.innerHTML = "No unassigned users";
@@ -210,8 +223,6 @@ if (path == "/admin/assign.html") {
 
         const [resp, status] = await (useFetchPost(`${url}projects/assign/`, { 'users_id': checkedIds, 'project_id': id }));
         console.log(resp);
-
-
 
         fetchUsers();
     })

@@ -251,29 +251,27 @@ export const getAssignedProject = async (req, res) => {
 
 export const getUsersForProject = async (req, res) => {
     try {
-        const { project_id } = req.body
         const pool = await mssql.connect(sqlConfig)
         if (pool.connected) {
             pool.request()
-                .input("project_id", project_id)
                 .execute("uspGetUsersForProject", (error, records) => {
                     if (error) {
                         console.log(error);
-                        res.json({ error })
+                      return  res.status(500).json({ error })
                     }
                     else {
                         console.log(records.recordset);
-                        res.json({ "users": records.recordset })
+                     return   res.status(200).json({ "users": records.recordset })
                     }
                 })
         }
         else {
-            res.json({ Error: "error connecting to db" })
+          return  res.json({ Error: "error connecting to db" })
         }
 
     } catch (error) {
         console.log(error);
-        res.json({error:error.message})
+      return  res.json({error:error.message})
     }
 }
 
@@ -355,7 +353,6 @@ export const getUsersForAproject = async (req, res) => {
 
     try {
         const id = req.params.id;
-
         const resp = await DB.exec('uspGetUsersAssignedToAProject', { id })
         console.log(resp)
         if (resp.recordset.length == 0) {
