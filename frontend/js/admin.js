@@ -84,7 +84,7 @@ if(path == "/admin/project.html"){
     const projectDetails = async()=>{
 
         const [resp,status]= await(useFetchGet(`${url}projects/${id}`));
-        const project = resp['project'];
+        const project = resp['project'][0];
         console.log(resp)
         if(status == 200){
             document.querySelector(".project-desc").innerHTML = project.description;
