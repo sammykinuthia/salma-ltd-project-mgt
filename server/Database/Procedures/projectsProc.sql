@@ -1,9 +1,11 @@
 use SalmaConstructions;
 go
 
-CREATE OR ALTER  PROC uspGetProjects AS
+CREATE OR ALTER  PROC uspGetProjects
+AS
 BEGIN
-SELECT *  FROM project 
+    SELECT *
+    FROM project
 END;
 GO
 
@@ -20,7 +22,9 @@ BEGIN
         (id,name, description, start_date, end_date)
     VALUES
         (@id, @name, @description, @start_date, @end_date);
-        SELECT * FROM project WHERE id=@id
+    SELECT *
+    FROM project
+    WHERE id=@id
 
 END;
 go
@@ -29,44 +33,62 @@ CREATE OR ALTER PROC uspGetProjectById
     @id VARCHAR(200)
 AS
 BEGIN
-    SELECT * FROM project WHERE id=@id
+    SELECT *
+    FROM project
+    WHERE id=@id
 
 END;
 GO
 
 
-CREATE OR ALTER PROC uspGetProjectUserById( @project_id VARCHAR(200),@user_id VARCHAR(200))
+CREATE OR ALTER PROC uspGetProjectUserById(
+    @project_id VARCHAR(200),
+    @user_id VARCHAR(200))
 AS
 BEGIN
-    SELECT u.id user_id, u.username, u.email, p.name, p.id project_id FROM projectUser pu
-    FULL OUTER JOIN users u
-    ON user_id = u.id
-    FULL OUTER JOIN project p
-    ON pu.project_id = p.id
+    SELECT u.id user_id, u.username, u.email, p.name, p.id project_id
+    FROM projectUser pu
+        FULL OUTER JOIN users u
+        ON user_id = u.id
+        FULL OUTER JOIN project p
+        ON pu.project_id = p.id
     WHERE pu.project_id=@project_id AND user_id=@user_id
 END;
 GO
 
 
-CREATE OR ALTER PROC uspSetProjectUser ( @project_id VARCHAR(200),@user_id VARCHAR(200)) AS
+CREATE OR ALTER PROC uspSetProjectUser
+    (
+    @project_id VARCHAR(200),
+    @user_id VARCHAR(200))
+AS
 BEGIN
-    INSERT INTO projectUser(project_id, user_id) VALUES
-    (@project_id, @user_id)
+    INSERT INTO projectUser
+        (project_id, user_id)
+    VALUES
+        (@project_id, @user_id);
+    SELECT *
+    FROM projectUser
+    WHERE user_id=@user_id AND project_id=@project_id
 END;
 GO
 
 
 
-CREATE OR ALTER PROC uspGetProjectByUserId (@user_id VARCHAR(200)) AS
+CREATE OR ALTER PROC uspGetProjectByUserId
+    (@user_id VARCHAR(200))
+AS
 BEGIN
-    SELECT p.id, p.end_date, p.name title,p.start_date, u.full_name FROM projectUser pu
-    FULL OUTER JOIN project p ON pu.project_id = p.id
-    FULL OUTER JOIN users u ON pu.user_id = u.id
+    SELECT p.id, p.end_date, p.name title, p.start_date, u.full_name
+    FROM projectUser pu
+        FULL OUTER JOIN project p ON pu.project_id = p.id
+        FULL OUTER JOIN users u ON pu.user_id = u.id
     WHERE u.id=@user_id AND p.completed_on IS NULL
 END;
 GO
 
--- SELECT * FROM project
+SELECT *
+FROM projectUser
 
 -- UPDATE project
 -- SET completed_on ='2023-02-02'
@@ -76,7 +98,7 @@ CREATE OR ALTER PROCEDURE uspGetCurrentUserProject(
     @user_id VARCHAR(200))
 AS
 BEGIN
-    SELECT 
+    SELECT
         p.id AS project_id,
         p.name AS project_name,
         p.description AS project_description,
@@ -84,11 +106,11 @@ BEGIN
         p.start_date AS project_start_date,
         p.end_date AS project_end_date,
         p.completed_on AS project_completed_on
-    FROM 
+    FROM
         users u
-    INNER JOIN 
+        INNER JOIN
         user_project up ON u.id = up.user_id
-    INNER JOIN 
+        INNER JOIN
         project p ON up.project_id = p.id
     WHERE 
         u.id = @user_id;
@@ -101,7 +123,7 @@ CREATE OR ALTER PROCEDURE uspGetUserProjectHistory(
     @user_id VARCHAR(200))
 AS
 BEGIN
-    SELECT 
+    SELECT
         uph.user_id,
         uph.project_id,
         uph.assigned_at,
@@ -111,9 +133,9 @@ BEGIN
         p.start_date AS project_start_date,
         p.end_date AS project_end_date,
         p.completed_on AS project_completed_on
-    FROM 
+    FROM
         user_project_history uph
-    INNER JOIN 
+        INNER JOIN
         project p ON uph.project_id = p.id
     WHERE 
         uph.user_id = @user_id
@@ -122,11 +144,42 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject @id VARCHAR(200)
+CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject
+    @id VARCHAR(200)
 AS
-	BEGIN
-		SELECT u.id, u.full_name, u.username, u.email
-		FROM users u
-		JOIN projectUser pu ON u.id = pu.user_id
-		WHERE pu.project_id = @id;
-	END;
+BEGIN
+    SELECT u.id, u.full_name, u.username, u.email
+    FROM users u
+        JOIN projectUser pu ON u.id = pu.user_id
+    WHERE pu.project_id = @id;
+END;
+    GO
+
+-- SELECT * FROM projectUser
+
+
+-- CREATE OR ALTER PROCEDURE uspGetUsersForProject( @project_id VARCHAR(200))
+-- AS
+-- 	BEGIN
+--         SELECT * FROM users
+-- 	END;
+--     GO
+
+CREATE OR ALTER PROCEDURE uspGetUsersForProject
+AS
+BEGIN
+    SELECT full_name, username, id,email FROM users 
+    WHERE id NOT IN (
+        SELECT user_id from projectUser 
+        INNER JOIN project ON project_id = id
+        WHERE completed_on IS NULL
+    )
+   
+END;
+    GO
+
+-- EXEC uspGetUsersForProject;
+-- SELECT *
+-- from project
+-- DELETE FROM project
+

@@ -9,7 +9,7 @@ async function renderProject(){
         
         const user = getCurrentUser()
         console.log(user);
-        const [res, code] = await useFetchGet(`http://localhost:3000/projects/${user.id}`)
+        const [res, code] = await useFetchGet(`http://localhost:3000/projects/u/${user.id}`)
         if(code == 200){
 
        
