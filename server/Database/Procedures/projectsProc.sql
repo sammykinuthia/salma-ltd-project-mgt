@@ -1,4 +1,4 @@
-use SalmaConstructions;
+use Salma;
 go
 
 CREATE OR ALTER  PROC uspGetProjects
