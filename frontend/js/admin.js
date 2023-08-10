@@ -31,6 +31,7 @@ if (path == "/admin/" || path == "/admin/index.html") {
 
         if (status == 200) {
             projects.forEach((project) => {
+                console.log(project);
                 const maxLength = 20;
                 const description = project.description.length > maxLength ? project.description.slice(0, maxLength) + "..." : project.description;
 
@@ -38,8 +39,8 @@ if (path == "/admin/" || path == "/admin/index.html") {
                         <div class="project-card" id="${project.id}">
                             <h3 class="project-title">${project.name}</h3>
                             <p class="project-desc">${description}</p>
-                            <div class="project-completion">To be Completed by <span id="completion-date">${formatDate(project.end_date)}</span> </div>
-                            <div class="status-icon"></div>
+                            <div class="project-completion">${project.completed_on ? 'Completed on: '+formatDate(project.completed_on) : "To be Completed by:"+formatDate(project.end_date)}</div>
+                            <div class="status-icon ${project.completed_on? 'status-completed':''}"> ${project.completed_on? '<iconify-icon class="icon"  icon="ic:sharp-done-outline"></iconify-icon>':""}</div>
                         </div>
                         `
             });
@@ -125,20 +126,22 @@ if (path == "/admin/project.html") {
 
         }
 
+        const deletebtn = document.querySelector(".delete-btn");
+        deletebtn.addEventListener("click", async () => {
+            const [response, status] = await (useFetchDel(`${url}projects/${id}`));
+            if (status == 202) {
+                window.location.href = "./"
+            }
+            else {
+                // alert("error deleting")
+                console.log(response);
 
+            }
+    
+        })
 
     }
-    const deletebtn = document.querySelector(".delete-btn");
-    deletebtn.addEventListener("click", async () => {
-        const [response, status] = await (useFetchDel(`${url}projects/${id}`));
-        if (status == 200) {
-            window.location.href = "./"
-        }
-        else {
-            alert("error deleting")
-        }
-
-    })
+   
 
     projectDetails();
 }
@@ -164,7 +167,7 @@ if (path == "/admin/assign.html") {
                                 <input type="checkbox" id="${user.id}">
                             </div>
                             <div class="user-name-section">
-                                <h4 class="user-name">${user.full_name}</h4>
+                                <h4 class="user-name">${user.username}</h4>
                             </div>
                             <div class="user-email-section">
                                 <p class="user-email">${user.email}</p>
@@ -219,22 +222,12 @@ if (path == "/admin/assign.html") {
         });
 
         console.log(checkedIds)
-
-
         const [resp, status] = await (useFetchPost(`${url}projects/assign/`, { 'users_id': checkedIds, 'project_id': id }));
+        window.location.reload()
         console.log(resp);
 
         fetchUsers();
     })
-
-
-
-
-
-
-
-
-
 
     fetchUsers();
 }
