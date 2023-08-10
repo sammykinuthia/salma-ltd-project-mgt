@@ -1,31 +1,32 @@
-import {  getProjects } from "./projectControllers";
+import {  getProject, getProjects } from "./projectControllers";
 import mssql from "mssql"
+import { DB } from "../DatabaseHelpers/index.js"
 
-const res = {
+jest.mock("../DatabaseHelpers/index")
+
+
+const res= {
     status: jest.fn(() => res),
     json: jest.fn()
-  };
 
-jest.mock('mssql', () => {
-    const mockRequest = {
-      execute: jest.fn()
-};
     
-const mockPool = {
-      request: jest.fn(() => mockRequest),
-      connected: true
-    };
-  
-return {
-      connect: jest.fn(),
-      Pool: jest.fn(() => mockPool),
-      close: jest.fn()
-    };
+    
+};
 
 
-});
+
+  jest.mock('mssql', () => ({
+    connect: jest.fn(() => ({
+      connected: true,
+      request: jest.fn().mockReturnThis(),
+    })),
+  }));
 
 describe("TESTS FOR PROJECT CONTROLLER",()=>{
+
+    
+
+
     describe("Get Projects EndPoint",()=>{
         it("returns authorization error when the request is made by a non admin",async()=>{
             const req = {
@@ -44,40 +45,79 @@ describe("TESTS FOR PROJECT CONTROLLER",()=>{
 
 
         it('returns 404 when no projects are found', async () => {
-            const req = {
-              info: {
-                is_admin: true
+          const req = {
+            info: {
+              is_admin: true
+            }
+          };
+
+          jest.spyOn(mssql,"connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce(
+              {
+                recordset: []
               }
-            };
+            )
+
+          
+          })
+
+          await getProjects(req,res);
+
+          expect(res.status).toHaveBeenCalledWith(404);           
             
-            const mockExecute = jest.fn((_, callback) => {
-                callback(null, { recordset: [] });
-              });
           
-              const mockRequest = {
-                execute: mockExecute
-              };
-          
-              mssql.Pool.mockImplementation(() => ({
-                request: jest.fn(() => mockRequest),
-                connected: true
-              }));
-          
-              await getProjects(req, res);
-          
-              expect(mockExecute).toHaveBeenCalledWith('uspGetProjects', expect.any(Function));
-              expect(res.status).toHaveBeenCalledWith(404);
-              expect(res.json).toHaveBeenCalledWith({ message: 'no projects' });
-
-
-
-
-           
-        
             
           });
         
         
         
+    })
+
+
+    describe("getProject Function and Endpoint",()=>{
+      it("returns 404 and project not found if not found",async()=>{
+        const mockResponse =  
+          {
+              "id": "62e2a8a6-9d13-4470-96e4-2ec738d68c3c",
+              "name": "This is a dope project",
+              "description": "rhwwn this and that this and that tthen thisnjisbntrjb wtrheuhtfj fnklwjnc fnvwbfvjrtng cjnwbjfnw vbjsrjkfcb vrwjnrbg5jrvkc wvnjtkh2c4nw gj2vwbtcfnwrjhtwvg5n4wrjktvhu2",
+              "created_at": "2023-08-07T00:00:00.000Z",
+              "start_date": "2023-08-16T00:00:00.000Z",
+              "end_date": "2023-08-31T00:00:00.000Z",
+              "completed_on": null,
+              "is_completed": false
+          }
+          const req = {
+            params:{
+              id:  "62e2a8a6-9d13-4470-96e4-2ec738d68c3c"
+            }
+          }
+            
+          
+          await getProject(req,res)
+
+          DB.exec.mockResolvedValueOnce({id});
+
+          expect(res.json).toHaveBeenCalledWith({
+            
+              status: "success",
+              project: mockResponse
+          
+          })
+
+
+        
+
+        
+        
+
+      })
+    })
+
+
+    describe("Create Projects",()=>{
+      it()
     })
 })
