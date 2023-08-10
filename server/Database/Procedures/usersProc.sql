@@ -1,5 +1,5 @@
 
-use SalmaConstructions;
+use Salma
 go
 
 CREATE OR ALTER PROC uspCreateUser(@id VARCHAR(200),
@@ -134,3 +134,5 @@ END;
 
 
 -- SELECT * FROM verificationToken
+
+SELECT * FROM users
