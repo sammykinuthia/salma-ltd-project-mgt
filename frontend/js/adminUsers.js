@@ -19,28 +19,29 @@ async function renderUsers(fielter = 'all') {
             users = users.filter(user => user.is_verified)
         }
 
-        // console.log(r[0]);
         let usersList = ""
-        for (let user of users) {
-            // console.log(user);
-            usersList +=
-                `<div class="user-card" id=${user.id}>
-                    <div class="user-select">
-                        <input type="checkbox" >
-                    </div>
-                    <div class="user-name-section">
-                        <h4 class="user-name">${user.full_name}</h4>
-                    </div>
-                    <div class="user-email-section">
-                        <p class="user-email">${user.email}</p>
-                    </div>
-                    <div class="user-project-section">
-                        <p class="user-project">${user.project}</p>
-                    </div>
-                    <div class="user-verified">
-                        <p class="user-project">${user.is_verified ? '<iconify-icon class="icon-correct" icon="icon-park-twotone:correct"></iconify-icon>' : '<iconify-icon class="icon-waiting" icon="streamline:interface-page-controller-loading-half-progress-loading-load-half-wait-waiting"></iconify-icon>'}</p>
-                    </div>
-                </div>`
+        if (users.length > 0) {
+            users.forEach((user, index) => {
+                let i = index + 1
+                usersList +=
+                    `<tr>
+                <td>${i}</td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>
+                <td>${user.project || 'No Project'}</td>
+                <td>${user.is_verified ? '<iconify-icon class="icon-early icon" icon="ic:sharp-done-outline"></iconify-icon>' : '<iconify-icon class="con-late" icon="circum:no-waiting-sign"></iconify-icon>'}</td>
+            </tr>`
+            })
+        }
+        else {
+            usersList += `<tr>
+                            <td>${1}</td>
+                            <td>${None}</td>
+                            <td>${None}</td>
+                            <td>${None}</td>
+                            <td>${None} </td>
+                        </tr>
+                        `
         }
         usersSection.innerHTML = usersList
     } catch (error) {
