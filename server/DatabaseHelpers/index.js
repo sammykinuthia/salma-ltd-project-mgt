@@ -10,7 +10,6 @@ export class DB {
         try {
             let request = await (await mssql.connect(sqlConfig)).request();
             request = this.addData(request, data);
-            console.log("called");
             return request.execute(storedProcedure);
         } catch (error) {
             console.log(error);

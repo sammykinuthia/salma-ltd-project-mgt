@@ -1,4 +1,4 @@
-use SalmaConstructions;
+use Salma;
 go
 
 CREATE OR ALTER  PROC uspGetProjects
@@ -79,7 +79,7 @@ CREATE OR ALTER PROC uspGetProjectByUserId
     (@user_id VARCHAR(200))
 AS
 BEGIN
-    SELECT p.id, p.end_date, p.name title, p.start_date, u.full_name
+    SELECT p.id, p.end_date, p.name title, p.start_date, u.full_name, p.[description]
     FROM projectUser pu
         FULL OUTER JOIN project p ON pu.project_id = p.id
         FULL OUTER JOIN users u ON pu.user_id = u.id
@@ -87,8 +87,8 @@ BEGIN
 END;
 GO
 
-SELECT *
-FROM projectUser
+-- SELECT *
+-- FROM projectUser
 
 -- UPDATE project
 -- SET completed_on ='2023-02-02'
@@ -119,31 +119,41 @@ GO
 
 
 
-CREATE OR ALTER PROCEDURE uspGetUserProjectHistory(
-    @user_id VARCHAR(200))
-AS
+-- CREATE OR ALTER PROCEDURE uspGetUserProjectHistory( @user_id VARCHAR(200))
+-- AS
+-- BEGIN
+--     SELECT
+--         uph.user_id,
+--         uph.project_id,
+--         uph.assigned_at,
+--         p.name AS project_name,
+--         p.description AS project_description,
+--         p.created_at AS project_created_at,
+--         p.start_date AS project_start_date,
+--         p.end_date AS project_end_date,
+--         p.completed_on AS project_completed_on
+--     FROM
+--         user_project_history uph
+--         INNER JOIN
+--         project p ON uph.project_id = p.id
+--     WHERE 
+--         uph.user_id = @user_id
+--     ORDER BY 
+--         uph.assigned_at DESC;
+-- END;
+-- GO
+
+
+CREATE OR ALTER PROC uspGetUserProjectHistory (@user_id VARCHAR(200)) AS
 BEGIN
-    SELECT
-        uph.user_id,
-        uph.project_id,
-        uph.assigned_at,
-        p.name AS project_name,
-        p.description AS project_description,
-        p.created_at AS project_created_at,
-        p.start_date AS project_start_date,
-        p.end_date AS project_end_date,
-        p.completed_on AS project_completed_on
-    FROM
-        user_project_history uph
-        INNER JOIN
-        project p ON uph.project_id = p.id
-    WHERE 
-        uph.user_id = @user_id
-    ORDER BY 
-        uph.assigned_at DESC;
+SELECT p.name project, p.created_at, p.id, p.[description], p.end_date, u.full_name, u.username, u.id user_id, u.email, p.completed_on FROM projectUser pu
+INNER JOIN users u ON pu.user_id = u.id
+INNER JOIN project p ON p.id = pu.project_id
+WHERE pu.user_id = @user_id
 END;
 GO
 
+-- EXEC uspGetUserProjectHistory '7498ab14-017c-4ba6-a5a8-d5ab44660606';
 CREATE OR ALTER PROCEDURE uspGetUsersAssignedToAProject
     @id VARCHAR(200)
 AS
@@ -168,18 +178,34 @@ END;
 CREATE OR ALTER PROCEDURE uspGetUsersForProject
 AS
 BEGIN
-    SELECT full_name, username, id,email FROM users 
+    SELECT full_name, username, id, email FROM users 
     WHERE id NOT IN (
         SELECT user_id from projectUser 
         INNER JOIN project ON project_id = id
-        WHERE completed_on IS NULL
+        WHERE completed_on IS  NULL
     )
    
 END;
-    GO
+GO
 
 -- EXEC uspGetUsersForProject;
 -- SELECT *
 -- from project
 -- DELETE FROM project
 
+
+
+CREATE OR ALTER PROC uspDeleteProject (@id VARCHAR(200)) AS
+BEGIN
+    DELETE FROM projectUser WHERE project_id = @id;
+    DELETE FROM project WHERE id = @id
+END;
+GO
+
+CREATE OR ALTER PROC uspMarkProjectCompleted (@project_id VARCHAR(200)) AS
+BEGIN
+    UPDATE project
+    SET completed_on= GETDATE()
+    WHERE id= @project_id
+END;
+GO

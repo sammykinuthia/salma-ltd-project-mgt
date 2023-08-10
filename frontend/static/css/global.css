@@ -122,7 +122,13 @@ select {
     border: 1px solid;
 
 }
+.status-completed .icon{
+    color: white;
+    background: #000;
+    padding: .2rem;
+    font-size: 1.3rem;
 
+}
 .status-icon-late {
     background: rgb(216, 57, 57);
 }
@@ -393,4 +399,12 @@ a {
     gap: .4rem;
     box-shadow: 0px 1px 2px -1px var(--bg-accent);
 
+}
+.proj-footer{
+    border-top: 1px solid var(--bg-accent);
+    padding: .4rem 0;
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }

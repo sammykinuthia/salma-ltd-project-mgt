@@ -112,7 +112,7 @@ export const getProjectByUserId = async (req, res) => {
                     else {
                         if (records.recordset.length == 0)
                             return res.status(404).json({ "message": "not projects" })
-                       
+
                         return res.status(200).json({ "data": records.recordset })
 
 
@@ -138,26 +138,26 @@ export const getProjectByUserId = async (req, res) => {
 
 export const assignProject = async (req, res) => {
     try {
-        const {users_id, project_id} = req.body
+        const { users_id, project_id } = req.body
         // const users_id = users_id_str.slice(1, -1).split(",");
         // console.log(Array.isArray(users_id));
         // console.log(users_id);
 
         const pool = await mssql.connect(sqlConfig)
- 
+
         if (pool.connected) {
-            for(let user_id of users_id) {
+            for (let user_id of users_id) {
                 // console.log(user_id);
-               await pool.request()
+                await pool.request()
                     .input("project_id", project_id)
                     .input("user_id", user_id)
                     .execute("uspSetProjectUser", (error, records) => {
                         if (error) {
                             console.log(error.message);
-                            res.json({ error:error.message })
+                            res.json({ error: error.message })
                         }
                         else {
-                            console.log(records.recordset);
+                            // console.log(records.recordset);
                             res.json({ "data": records.recordset })
                         }
                     })
@@ -170,7 +170,7 @@ export const assignProject = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.json({error:error.message})
+        res.json({ error: error.message })
     }
 }
 export const deleteProject = async (req, res) => {
@@ -184,24 +184,38 @@ export const deleteProject = async (req, res) => {
             )
         }
         const id = req.params.id;
-        const resp = await DB.exec('uspDeleteProject', { id })
-
-        if (resp.rowsAffected[0] == 0) {
-            return res.status(200).json(
-                {
-                    status: "success",
-                    message: "Project Deleted Successfully"
+        const pool = await mssql.connect(sqlConfig)
+        if (pool.connected) {
+            await pool.request().input("id", id).execute('uspDeleteProject', (error, record) => {
+                if (error)
+                    return res.status(500).json({ error: error.message })
+                else {
+                    console.log(record.recordset);
+                    return res.status(202).json({ "message": "item deleted successifuly" })
                 }
-            )
-
+            })
         }
+        else {
+            return res.status(500).json({ error: "Error connecting to db" })
+        }
+        // const resp = await DB.exec('uspDeleteProject', { id })
+        // console.log("d", resp);
+        // if (resp.rowsAffected[0] == 0) {
+        //     return res.status(200).json(
+        //         {
+        //             status: "success",
+        //             message: "Project Deleted Successfully"
+        //         }
+        //     )
 
-        return res.status(401).json(
-            {
-                status: "error",
-                message: "Project Not Deleted"
-            }
-        )
+        // }
+
+        // return res.status(401).json(
+        //     {
+        //         status: "error",
+        //         message: "Project Not Deleted"
+        //     }
+        // )
 
     } catch (error) {
 
@@ -230,7 +244,7 @@ export const getAssignedProject = async (req, res) => {
                         res.json({ error })
                     }
                     else {
-                        console.log(records.recordset);
+                        // console.log(records.recordset);
                         res.json({ "data": records.recordset })
                     }
                 })
@@ -241,7 +255,7 @@ export const getAssignedProject = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.json({error:error.message})
+        res.json({ error: error.message })
     }
 }
 
@@ -253,21 +267,21 @@ export const getUsersForProject = async (req, res) => {
                 .execute("uspGetUsersForProject", (error, records) => {
                     if (error) {
                         console.log(error);
-                      return  res.status(500).json({ error })
+                        return res.status(500).json({ error })
                     }
                     else {
-                        console.log(records.recordset);
-                     return   res.status(200).json({ "users": records.recordset })
+                        // console.log(records.recordset);
+                        return res.status(200).json({ "users": records.recordset })
                     }
                 })
         }
         else {
-          return  res.json({ Error: "error connecting to db" })
+            return res.json({ Error: "error connecting to db" })
         }
 
     } catch (error) {
         console.log(error);
-      return  res.json({error:error.message})
+        return res.json({ error: error.message })
     }
 }
 
@@ -310,37 +324,29 @@ export const getUserProject = async (req, res) => {
 
 export const getUserProjectsHistory = async (req, res) => {
     try {
-        const user_id = req.info.id;
-
-        const resp = await DB.exec('uspGetUserProjectHistory', { user_id })
-        if (resp.recordset.length == 0) {
-            return res.status(404).json(
-                {
-                    status: "error",
-                    message: "No Project History Found"
-                }
-            )
-
+        const { id } = req.info
+        const pool = await mssql.connect(sqlConfig)
+        if (pool.connected) {
+            pool.request()
+                .input("user_id", id)
+                .execute("uspGetUserProjectHistory", (error, records) => {
+                    if (error) {
+                        console.log(error);
+                        return res.status(500).json({ error: error.message })
+                    }
+                    else {
+                        console.log(records);
+                        return res.status(200).json({ "data": records.recordset })
+                    }
+                })
         }
         else {
-            return res.status(200).json(
-                {
-                    status: "success",
-                    projects: project.recordset
-                }
-            )
-
+            return res.json({ Error: "error connecting to db" })
         }
+
     } catch (error) {
-        return res.status(500).json(
-            {
-                status: "error",
-                message: "Error fetching projects"
-            }
-        )
-
-
-
+        console.log(error);
+        return res.json({ error: error.message })
     }
 }
 
@@ -384,4 +390,27 @@ export const getUsersForAproject = async (req, res) => {
 
 
 
+}
+
+export const markProjectCompleted = async (req, res) => {
+    try {
+        const { id } = req.params
+        const pool = await mssql.connect(sqlConfig)
+        if (pool.connected) {
+            const request = await pool.request()
+            const resp = await request.input("project_id", id).execute("uspMarkProjectCompleted")
+            if (resp.rowsAffected[0] == 1) {
+                res.status(202).json({ "message": "Updated successifuly" })
+            }
+            else {
+                res.status(500).json({ 'error': "unable to complete the operation" })
+            }
+        }
+        else {
+            res.status(500).json({ error: error.message })
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 }

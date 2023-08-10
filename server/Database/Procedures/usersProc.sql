@@ -1,5 +1,5 @@
 
-use SalmaConstructions;
+use Salma
 go
 
 CREATE OR ALTER PROC uspCreateUser(@id VARCHAR(200),
@@ -38,12 +38,14 @@ GO
 
 CREATE OR ALTER  PROC uspGetUsers AS
 BEGIN
-SELECT u.id id, username, is_verified , email, full_name, is_admin, p.name project  FROM projectUser pu
-FULL OUTER JOIN users u ON  pu.user_id = u.id 
-FULL OUTER JOIN project p ON pu.project_id = p.id
-WHERE u.is_deleted = 0
+    SELECT  u.id id, username, is_verified , email, full_name, is_admin, p.name project  FROM projectUser pu
+    FULL OUTER JOIN users u ON  pu.user_id = u.id 
+     FULL OUTER JOIN project p ON pu.project_id = p.id
+    WHERE u.is_deleted = 0 AND p.completed_on IS NULL
+   
 END;
 GO
+-- SELECT * FROM users
 
 
 CREATE OR ALTER  PROC uspGetUser(@id VARCHAR(200)) AS
@@ -134,3 +136,5 @@ END;
 
 
 -- SELECT * FROM verificationToken
+
+SELECT * FROM users

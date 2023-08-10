@@ -30,7 +30,7 @@ export const createUser = async (req, res) => {
             return res.status(400).json(
                 {
 
-                    message: "A user with this username or email exists. user a different one"
+                    message: "A user with this username or email exists. Use a different one"
                 }
             )
 
@@ -154,9 +154,12 @@ export const getUser = async (req, res) => {
     const { id } = req.params
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
+        console.log("Error")
         pool.request().input("id", id).execute("uspGetUser", (error, record) => {
             if (error) {
+                
                 return res.json({ Error: error })
+                console.log("Error")
             }
             else {
                 if (record.recordset.length == 0)
