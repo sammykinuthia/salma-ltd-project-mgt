@@ -366,9 +366,10 @@ a {
 
 .project-card {
     cursor: pointer;
+    
 }
 
-#error {
+#error,.error {
     color: var(--bg-danger);
 }
 

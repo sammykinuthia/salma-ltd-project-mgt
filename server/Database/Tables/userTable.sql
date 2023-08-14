@@ -26,9 +26,8 @@ CREATE TABLE verificationToken(
     created_at DATE DEFAULT GETDATE(),
     verified_at DATE,
     FOREIGN KEY(user_id) REFERENCES users(id)
-)
 
-
+SELECT * FROM users
 
 
 -- ALTER TABLE users
