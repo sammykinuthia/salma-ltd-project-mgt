@@ -1,4 +1,4 @@
-import { url } from "../e2e/spec.login.user.cy";
+//import { url } from "../e2e/spec.login.user.cy";
 
 
 // ***********************************************
@@ -29,8 +29,7 @@ import { url } from "../e2e/spec.login.user.cy";
 
 
 Cypress.Commands.add("login", (user_name, password) => {
-    cy.visit(`${url}auth/login.html`)
-
+    cy.visit(`http://127.0.0.1:8081/auth/login.html`)
     cy.get('[type="text"]').type(user_name)
     cy.get('[type="password"]').type(password)
     cy.get('[type="submit"]').click();

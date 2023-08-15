@@ -1,38 +1,56 @@
-### Runnning the Application
-##### Frontend
+## Runnning the Application
+## Setting Up
 
-Prerequisites
+```bash
+cd server
+npm install
+```
 
-Have http-server installed
+```bash
+cd services
+npm install
+```
+
+```bash
+cd frontend
+npm install
+```
+
+## Running/Visualizing
+### Frontend
+
+Prerequisites: Have http-server installed
 ```bash
 cd frontend
 http-server
 ```
 
-##### Backend/Server
+### Backend/Server
 ```bash
 cd server
-npm install
 npm run dev
 ```
 
-##### Services
+### Services
 ```bash
 cd services
-npm install
 npm start
 ```
 
-### Runnning Tests
-##### Unit Tests for Backend
+## Runnning Tests
+### Unit Tests for Backend
 ```bash
 cd server
 npm test
 ```
-##### Unit Tests for Frontend
+### Unit Tests for Frontend
 
 ```bash
 cd frontend
-
+npm test
 ```
-##### e2e tests
+### e2e tests
+```bash
+cd frontend
+npx cypress open
+```

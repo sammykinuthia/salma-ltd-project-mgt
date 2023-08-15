@@ -1,6 +1,6 @@
 /// <reference types='Cypress'/>
 
-export const url = 'http://127.0.0.1:8081/';
+export const url = 'http://127.0.0.1:8080/';
 export const url_user = '/user/';
 export const sign_up = '/auth/register.html'
 describe('LOGIN USER', () => {

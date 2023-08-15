@@ -2,7 +2,7 @@ import mssql from 'mssql'
 import { sqlConfig } from '../Config/config.js'
 import { v4 } from 'uuid'
 import { DB } from "../DatabaseHelpers/index.js"
-
+import { createProjectSchema } from '../Validators/projectValidators.js'
 
 
 export const getProjects = async (req, res) => {
@@ -38,6 +38,21 @@ export const getProjects = async (req, res) => {
 export const createProject = async (req, res) => {
     const id = v4()
     const { name, description, start_date, end_date } = req.body
+
+    const {error} = createProjectSchema.validate(req.body)
+
+    if(error){
+        return res.status(422).json({
+            'status': 'error',
+            'message': error.message
+        }
+        )
+    }
+
+
+
+
+
     const pool = await mssql.connect(sqlConfig)
     if (pool.connected) {
         pool.request()
