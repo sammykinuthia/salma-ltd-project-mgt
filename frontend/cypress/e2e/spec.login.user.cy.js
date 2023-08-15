@@ -1,11 +1,11 @@
 /// <reference types='Cypress'/>
 
-export const url = 'http://192.168.77.169:8081/auth/login.html';
-export const url_user = 'http://192.168.77.169:8081/user';
-export const sign_up = 'http://192.168.77.169:8081/auth/register.html'
+export const url = 'http://127.0.0.1:8081/';
+export const url_user = '/user/';
+export const sign_up = '/auth/register.html'
 describe('LOGIN USER', () => {
   beforeEach(() => {
-    cy.visit(url)
+    cy.visit(`${url}auth/login.html`)
   })
   it('contains login form', () => {
     cy.get('form')
@@ -23,14 +23,16 @@ describe('LOGIN USER', () => {
     cy.get('form').find('[type="text"]').type('joystone2')
     cy.get('form').find('[type="password"]').type('password')
     cy.get('form').find('[type="submit"]').click();
-    cy.url().should('include', url_user)
+    cy.location('pathname').should('equal',url_user)
+ 
     
   })
 
   it("redirects to sign up when the bottom redirection is clicked",()=>{
     cy.get('a').should('contain','Sign Up')
-    cy.get("[data-cy='redirect-to-signup']").click();
-    cy.url().should('include', sign_up)
+    cy.get("[data-cy='redirect-to-signup']").as('signup')
+    cy.get('@signup').click();
+    cy.location('pathname').should('equal',sign_up)
   
 
     
