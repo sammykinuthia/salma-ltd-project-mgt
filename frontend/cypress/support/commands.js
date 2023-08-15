@@ -1,3 +1,6 @@
+import { url } from "../e2e/spec.login.user.cy";
+
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +26,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add("login", (user_name, password) => {
+    cy.visit(`${url}auth/login.html`)
+
+    cy.get('[type="text"]').type(user_name)
+    cy.get('[type="password"]').type(password)
+    cy.get('[type="submit"]').click();
+    
+  });
+  
