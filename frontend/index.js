@@ -1,3 +1,34 @@
+import { getCurrentUser} from "./js/auth/utilities.js"
+
+const toggleButtons = ()=>{
+  let user = getCurrentUser();
+  if(user){
+    if(user.is_admin){
+      document.querySelectorAll('.buttons')[0].style.display = 'none';
+      document.querySelectorAll('.buttons')[1].style.display = 'none';
+      document.querySelector('.dashboard-user').style.display = 'none';
+      document.querySelector('.dashboard-admin').style.display = 'block';
+    }
+    else{
+      document.querySelectorAll('.buttons')[0].style.display = 'none';
+      document.querySelectorAll('.buttons')[1].style.display = 'none';
+      document.querySelector('.dashboard-admin').style.display = 'none';
+      document.querySelector('.dashboard-user').style.display = 'block';
+    }
+    
+  }
+  else{
+    document.querySelector('.dashboard-admin').style.display = 'none';
+    document.querySelector('.dashboard-user').style.display = 'none';
+    document.querySelectorAll('.buttons')[0].style.display = 'block';
+    document.querySelectorAll('.buttons')[1].style.display = 'block';
+
+
+  }
+  
+}
+
+
 // local reviews data
 const reviews = [
     {
@@ -49,6 +80,7 @@ const reviews = [
     author.textContent = item.name;
     job.textContent = item.job;
     info.textContent = item.text;
+    
   });
   
   // show person based on item
@@ -76,10 +108,14 @@ const reviews = [
     showPerson(currentItem);
   });
   // show random person
-  randomBtn.addEventListener('click', function () {
-    console.log('hello');
+  // randomBtn.addEventListener('click', function () {
+  //   console.log('hello');
   
-    currentItem = Math.floor(Math.random() * reviews.length);
-    showPerson(currentItem);
-  });
+  //   currentItem = Math.floor(Math.random() * reviews.length);
+  //   showPerson(currentItem);
+  // });
   
+
+  window.addEventListener("load", function() {
+    toggleButtons()
+});

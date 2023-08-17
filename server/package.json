@@ -26,6 +26,8 @@
     "jsonwebtoken": "^9.0.1",
     "kill-port": "^2.0.1",
     "mssql": "^9.1.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
